@@ -25,11 +25,18 @@ SOUND_EVENTS = {
     "upload_resuming": "upload_resuming.mp3",
     "work_paused": "work_paused.mp3",
     "repository_refreshed": "repository_refreshed.mp3",
+    "readme_updated": "readme_updated.mp3",
+    "codebase_updated": "codebase_updated.mp3",
     "repository_private": "repository_private.mp3",
     "verification_started": "verification_started.mp3",
     "vulnerability_alerts_enabled": "vulnerability_alerts_enabled.mp3",
     "automated_security_fixes_enabled": "automated_security_fixes_enabled.mp3",
 }
+
+
+def repository_write_sound_event(path: str) -> str:
+    """Select the voice cue only for a successfully committed GitHub file."""
+    return "readme_updated" if Path(path).name.casefold() == "readme.md" else "codebase_updated"
 
 
 def active_edition(environment: dict[str, str] | None = None) -> str:

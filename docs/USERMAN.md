@@ -161,3 +161,7 @@ Upload Station defaults to automatic remote verification and **local reconstruct
 A remote upload which finished but whose automatic rebuild failed or paused has status `rebuild_failed` or `rebuild_paused`, not `complete`. It retains the committed GitHub manifest and can be resumed without duplicate commits. Original files are not deleted and existing destinations are never overwritten. An explicit per-upload opt-out is available for users who specifically want publish-only operation.
 
 The Bootlegger branding icon now sits **above** the complete title. Existing sidebar entries are preserved. Top-row controls select stages **within the current page**; they do not replicate the sidebar's destinations or perform remote writes. See [WORKFLOW.md](WORKFLOW.md).
+
+## New GitHub write announcements (Bootlegger)
+
+A successful confirmed GitHub README commit plays `readme_updated.mp3`. A successfully committed non-README file from Repository Code Workbench plays `codebase_updated.mp3`. README edits committed through the workbench use the README announcement too. These cues are not triggered by local-only saves, failed writes or a repository refresh. Lite uses OS-native notification tones and Headless remains sound-free. The complete checkout now requires 16 MP3 cues in each of `assets/sounds/` and `bootlegger/assets/sounds/`. Both new owner-provided MP3s must remain byte-for-byte unchanged; preview them under Settings & Help.

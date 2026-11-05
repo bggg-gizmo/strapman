@@ -4,12 +4,12 @@ from __future__ import annotations
 from pathlib import Path
 import hashlib
 
-from strapman.editions import BOOTLEGGER, LITE, SOUND_EVENTS, audio_path
+from strapman.editions import BOOTLEGGER, LITE, SOUND_EVENTS, audio_path, repository_write_sound_event
 from tools.verify_audio_assets import EXPECTED, git_blob_id, verify_audio
 
 
 def test_every_sound_event_is_mapped_to_a_unique_mp3():
-    assert len(SOUND_EVENTS) == 14
+    assert len(SOUND_EVENTS) == 16
     assert len(EXPECTED) == len(SOUND_EVENTS)
     assert set(EXPECTED) == set(SOUND_EVENTS.values())
     for event, filename in SOUND_EVENTS.items():
@@ -34,3 +34,10 @@ def test_audio_auditor_detects_missing_modified_and_exact_unchanged_copies(tmp_p
     assert "Audio bytes differ" in " ".join(verify_audio(tmp_path, expected=expected)["problems"])
     target.unlink()
     assert "Missing voice clip" in " ".join(verify_audio(tmp_path, expected=expected)["problems"])
+
+
+def test_repository_write_cues_are_distinct_and_case_insensitive():
+    assert repository_write_sound_event("README.md") == "readme_updated"
+    assert repository_write_sound_event("docs/README.MD") == "readme_updated"
+    assert repository_write_sound_event("src/core.py") == "codebase_updated"
+    assert repository_write_sound_event("configs/config.json") == "codebase_updated"

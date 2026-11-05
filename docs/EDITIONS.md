@@ -53,3 +53,7 @@ Both Lite and Bootlegger retain their edition-specific icons, palettes, sounds a
 ## v0.5.0 shared recovery, rebuild and editor capabilities
 
 Both editions include **Job History → Build / Rebuild**, Repository Desk's remote GitHub text editor and local code-validation workbench, a compact responsive sidebar, and top workflow navigation. All use the same underlying Git blob chunk/manifest integrity engine; the edition-specific palettes, voices, and data directories remain separate. Both detect hard-exit checkpoints at startup without restarting uploads automatically. The separate sound-free `headless/` edition uses either edition's state when explicitly selected. See [Crash Recovery](CRASH_RECOVERY.md) and [Headless](HEADLESS.md).
+
+## New GitHub write announcements
+
+Two new owner-supplied clips extend Bootlegger from 14 to **16** named MP3 notifications: `readme_updated.mp3` after a successful GitHub README commit, and `codebase_updated.mp3` after a successfully committed non-README source file in Repository Code Workbench. Each clip must exist, byte-exact, in both `assets/sounds/` and `bootlegger/assets/sounds/`. Lite uses its original OS tone instead; Headless remains silent. Neither a failed GitHub write nor a local-only edit should announce that GitHub was updated.

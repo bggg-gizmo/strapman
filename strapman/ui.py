@@ -33,7 +33,8 @@ from .auth import (
 from .auth_ui import DeviceLoginDialog, CliLoginDialog
 from .editions import (
     BOOTLEGGER, PRO_THEMES, SOUND_EVENTS, active_edition, audio_path,
-    PowerReminder, display_name, edition_stylesheet, icon_path, normalize_theme, on_ac_power
+    PowerReminder, display_name, edition_stylesheet, icon_path, normalize_theme, on_ac_power,
+    repository_write_sound_event
 )
 try:
     from PySide6.QtMultimedia import QMediaPlayer, QAudioOutput
@@ -1037,6 +1038,11 @@ class StrapmanWindow(QMainWindow):
                 self.remote_code_status.setText(f"Committed {path} to {repo}:{branch} · SHA {new_sha[:12]}")
             else:
                 self.remote_code_status.setText("GitHub write completed, but your editor changed; inspect before next commit")
+            # A confirmed remote SHA is required before announcing an update.
+            metadata = result.get("content") if isinstance(result, dict) else None
+            committed_sha = metadata.get("sha", "") if isinstance(metadata, dict) else ""
+            if re.fullmatch(r"[0-9a-f]{40}", committed_sha):
+                self._play_cue(repository_write_sound_event(path))
             return True
         self._launch(lambda notify: client.write_text(repo, branch, path, content, message, sha),
                      f"Committing GitHub code {path}", saved)
@@ -2130,6 +2136,7 @@ class StrapmanWindow(QMainWindow):
                 self._readme_sha = ""
                 self.readme_status.setText(
                     f"README committed on {repo}:{branch}; newer editor changes preserved. Reload to reconcile")
+            self._play_cue("readme_updated")
             return True
         self._launch(lambda notify: client.write_text(repo, branch, "README.md", text,
                                       "docs: update README with Strapman", expected_sha),
