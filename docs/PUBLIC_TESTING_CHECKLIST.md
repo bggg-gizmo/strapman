@@ -130,4 +130,15 @@ These boxes describe the **results still needed**, not work already certified:
 
 The [roadmap](../ROADMAP.md) tracks provider-independent work, Gitea, Forgejo, and longer-term platform research. We welcome feedback on the required host versions, authentication and workflows **while integrations are being completed**; their presence on the roadmap does not imply they work in this build.
 
+## Related documentation
+
+- [README and installation](../README.md)
+- [Full development roadmap](../ROADMAP.md)
+- [User manual](USERMAN.md)
+- [Automated upload and rebuild workflow](WORKFLOW.md)
+- [Headless reference](HEADLESS.md)
+- [Unexpected-exit and crash recovery](CRASH_RECOVERY.md)
+- [Security and privacy](SECURITY.md)
+- [Release-readiness evidence](RELEASE_READINESS.md)
+
 **Background Gremlin Group — Creating Unique Tools for Unique Individuals.**
