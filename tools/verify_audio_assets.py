@@ -18,8 +18,11 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from strapman.editions import SOUND_EVENTS
 
-# Source blobs verified against strapman-dev/main at 600a9df7f0c0cc7e525d3814c9e32e5112c03621.
-# Each tuple is (file size, Git blob object ID). No user location or token is present.
+# The original 14 Git blob IDs were verified against the development repository.
+# The two newly supplied recordings were verified byte-for-byte locally; their
+# GitHub publication is not confirmed until the private bootstrap publisher
+# commits the finished files and checks the remote tree/readback.
+# Each tuple is (file size, Git blob object ID). No token or device path is stored.
 EXPECTED = {
     "application_error.mp3": (142986, "0cb6b85020a68058a2696561551ef3cf16fb1d1c"),
     "application_exit.mp3": (81546, "1d2ac498baea28f010befbb9d4511ed4c2464eae"),
