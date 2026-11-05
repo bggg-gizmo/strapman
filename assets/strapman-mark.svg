@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="Strapman bubble-glass app mark">
+ <defs><linearGradient id="g" x2="0" y2="1"><stop stop-color="#6bd9ee"/><stop offset=".52" stop-color="#7383e9"/><stop offset="1" stop-color="#7757bd"/></linearGradient><linearGradient id="b" x2="0" y2="1"><stop stop-color="#1c3655"/><stop offset="1" stop-color="#0d1934"/></linearGradient></defs>
+ <rect x="11" y="11" width="234" height="234" rx="63" fill="url(#g)" stroke="#c2edff" stroke-width="7"/>
+ <rect x="29" y="65" width="198" height="154" rx="25" fill="url(#b)" stroke="#daeaff" stroke-width="5"/>
+ <path d="M29 94c0-16 11-29 28-29h142c16 0 28 13 28 29v8H29z" fill="#8bcef3"/>
+ <circle cx="54" cy="85" r="7" fill="#fff"/><circle cx="77" cy="85" r="7" fill="#fff" opacity=".6"/>
+ <path d="M75 148h105" stroke="#5b738e" stroke-width="17" stroke-linecap="round"/><path d="M75 148h72" stroke="#9df4bd" stroke-width="15" stroke-linecap="round"/>
+ <path d="M94 181l25 22 48-54" fill="none" stroke="#b0fff1" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="600" viewBox="0 0 1600 600" role="img" aria-label="Strapman — bubble-glass retro desktop upload studio by the Background Gremlin Group">
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#10152a"/><stop offset=".53" stop-color="#16142f"/><stop offset="1" stop-color="#072b35"/></linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#91eaff" stop-opacity=".46"/><stop offset=".42" stop-color="#5b8def" stop-opacity=".17"/><stop offset="1" stop-color="#5432a1" stop-opacity=".2"/></linearGradient>
+    <linearGradient id="title" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f1fdff"/><stop offset=".56" stop-color="#b6d1ff"/><stop offset="1" stop-color="#dfb5ff"/></linearGradient>
+    <linearGradient id="header" x2="1" y2="0"><stop stop-color="#62c8f8"/><stop offset=".57" stop-color="#6c80ef"/><stop offset="1" stop-color="#ac67ea"/></linearGradient>
+    <linearGradient id="green" x2="0" y2="1"><stop stop-color="#9dfbc3"/><stop offset="1" stop-color="#35dca2"/></linearGradient>
+    <radialGradient id="orb"><stop stop-color="#a8dbff" stop-opacity=".58"/><stop offset=".52" stop-color="#7cbaff" stop-opacity=".18"/><stop offset="1" stop-color="#8d8cf4" stop-opacity="0"/></radialGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="17" stdDeviation="22" flood-color="#01040e" flood-opacity=".55"/></filter>
+    <filter id="glow"><feGaussianBlur stdDeviation="26"/></filter>
+    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse"><path d="M48 0H0V48" fill="none" stroke="#8bbcff" stroke-opacity=".065" stroke-width="1"/></pattern>
+  </defs>
+  <rect width="1600" height="600" rx="32" fill="url(#bg)"/>
+  <rect width="1600" height="600" rx="32" fill="url(#grid)"/>
+  <circle cx="1380" cy="92" r="306" fill="url(#orb)"/>
+  <circle cx="1050" cy="580" r="310" fill="#493be8" opacity=".11" filter="url(#glow)"/>
+  <circle cx="270" cy="490" r="290" fill="#14aac2" opacity=".08" filter="url(#glow)"/>
+  <g opacity=".42" fill="none" stroke="#7c8fe9" stroke-width="2"><circle cx="1494" cy="425" r="20"/><circle cx="1550" cy="363" r="9"/><circle cx="857" cy="95" r="15"/><circle cx="89" cy="487" r="11"/></g>
+  <g transform="translate(76 67)">
+    <rect width="240" height="44" rx="22" fill="#2d3759" stroke="#6678b4" stroke-width="2"/>
+    <circle cx="24" cy="22" r="7" fill="#7fffc0"/>
+    <text x="44" y="29" font-family="Verdana,DejaVu Sans,sans-serif" font-size="17" fill="#daeeff" letter-spacing="1.5" font-weight="bold">BGG / SOFTWARE</text>
+    <text x="-3" y="176" font-family="Verdana,DejaVu Sans,sans-serif" font-size="99" font-weight="900" letter-spacing="-3" fill="url(#title)">STRAPMAN</text>
+    <text x="0" y="222" font-family="Verdana,DejaVu Sans,sans-serif" font-size="27" font-weight="bold" fill="#70e6e8">YOUR FILES. YOUR GITHUB. YOUR CONTROL.</text>
+    <text x="1" y="273" font-family="Verdana,DejaVu Sans,sans-serif" font-size="21" fill="#b8c8e8">A friendly, sturdy upload station for the serious stuff.</text>
+    <text x="1" y="304" font-family="Verdana,DejaVu Sans,sans-serif" font-size="21" fill="#b8c8e8">Split it. Stage it. Verify it. Bring it back whole.</text>
+    <g font-family="Verdana,DejaVu Sans,sans-serif" font-size="18" font-weight="bold">
+      <rect x="0" y="351" width="173" height="50" rx="24" fill="#1c4255" stroke="#5edced" stroke-width="2"/>
+      <text x="86" y="383" text-anchor="middle" fill="#aff7fb">WINDOWS</text>
+      <rect x="190" y="351" width="147" height="50" rx="24" fill="#2a2857" stroke="#8f8dff" stroke-width="2"/>
+      <text x="264" y="383" text-anchor="middle" fill="#e0d5ff">LINUX</text>
+      <rect x="354" y="351" width="216" height="50" rx="24" fill="#2d3e36" stroke="#78dca6" stroke-width="2"/>
+      <text x="462" y="383" text-anchor="middle" fill="#c2fbd8">NO ACTIONS</text>
+    </g>
+  </g>
+  <g transform="translate(855 96)" filter="url(#shadow)">
+    <rect x="76" y="75" width="548" height="342" rx="20" fill="#0b1430" stroke="#8991cf" stroke-width="4"/>
+    <rect x="76" y="75" width="548" height="54" rx="19" fill="url(#header)"/>
+    <rect x="76" y="112" width="548" height="17" fill="#8f83f1"/>
+    <circle cx="112" cy="102" r="9" fill="#dce9ff"/><circle cx="143" cy="102" r="9" fill="#dce9ff" opacity=".65"/><circle cx="174" cy="102" r="9" fill="#dce9ff" opacity=".4"/>
+    <text x="354" y="110" text-anchor="middle" font-family="Verdana,DejaVu Sans,sans-serif" font-size="18" fill="#0a2848" font-weight="bold">UPLOAD STATION</text>
+    <rect x="97" y="148" width="501" height="240" rx="15" fill="url(#glass)" stroke="#7089c3"/>
+    <text x="124" y="186" font-family="Verdana,DejaVu Sans,sans-serif" font-size="17" fill="#bfd7ff">Archive / source package</text>
+    <text x="124" y="226" font-family="Verdana,DejaVu Sans,sans-serif" font-size="22" font-weight="bold" fill="#f3f7ff">Verified staging</text>
+    <rect x="124" y="252" width="448" height="27" rx="14" fill="#102640" stroke="#6086b9" stroke-width="2"/>
+    <rect x="129" y="257" width="343" height="17" rx="9" fill="url(#green)"/>
+    <text x="572" y="307" font-family="Verdana,DejaVu Sans,sans-serif" font-size="16" text-anchor="end" fill="#b9cff2">77% • 8 workers</text>
+    <rect x="124" y="327" width="212" height="43" rx="17" fill="#c2eef6" stroke="#fff" stroke-width="2"/>
+    <text x="229" y="355" font-family="Verdana,DejaVu Sans,sans-serif" font-size="17" font-weight="bold" fill="#13334f" text-anchor="middle">VERIFY SHA-256</text>
+    <rect x="349" y="327" width="223" height="43" rx="17" fill="#624fb9" stroke="#a48cff" stroke-width="2"/>
+    <text x="460" y="355" font-family="Verdana,DejaVu Sans,sans-serif" font-size="17" font-weight="bold" fill="#f3eeff" text-anchor="middle">RESUME UPLOAD</text>
+    <circle cx="584" cy="34" r="31" fill="#98e7ff" fill-opacity=".18" stroke="#9deefe" stroke-width="3"/>
+    <path d="M571 34l9 10 20-24" fill="none" stroke="#a6ffc5" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+  <text x="78" y="554" font-family="Verdana,DejaVu Sans,sans-serif" font-size="18" fill="#9fb1d5">Developed by the Background Gremlin Group</text>
+  <text x="1524" y="554" font-family="Verdana,DejaVu Sans,sans-serif" text-anchor="end" font-size="18" fill="#a8e9e4">Creating Unique Tools for Unique Individuals</text>
+</svg>

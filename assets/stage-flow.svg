@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="310" viewBox="0 0 1440 310" role="img" aria-label="Strapman upload flow: local file, split and hash in parallel, verified Git objects, serialized publication, local restore and verification">
+  <defs>
+    <linearGradient id="bg"><stop stop-color="#111930"/><stop offset="1" stop-color="#192942"/></linearGradient>
+    <linearGradient id="card" x2="0" y2="1"><stop stop-color="#304466"/><stop offset="1" stop-color="#1b2949"/></linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#74cfef"/></marker>
+  </defs>
+  <rect width="1440" height="310" rx="26" fill="url(#bg)"/>
+  <text x="49" y="52" fill="#ecf5ff" font-family="Verdana,DejaVu Sans,sans-serif" font-weight="bold" font-size="27">How the upload journey works</text>
+  <g font-family="Verdana,DejaVu Sans,sans-serif" font-size="19" text-anchor="middle">
+    <g transform="translate(44 100)"><rect width="234" height="139" rx="24" fill="url(#card)" stroke="#6787bb" stroke-width="2"/><circle cx="117" cy="34" r="17" fill="#8a96fc"/><path d="M111 26h13v18h-13z" fill="#172a4c"/><text x="117" y="79" fill="#edf5ff" font-weight="bold">1 • SELECT</text><text x="117" y="108" fill="#b9cbed" font-size="15">Local source file</text></g>
+    <path d="M288 168H324" stroke="#74cfef" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+    <g transform="translate(339 100)"><rect width="234" height="139" rx="24" fill="url(#card)" stroke="#6787bb" stroke-width="2"/><circle cx="108" cy="31" r="10" fill="#9bf8da"/><circle cx="135" cy="31" r="10" fill="#9bf8da"/><circle cx="122" cy="50" r="10" fill="#9bf8da"/><text x="117" y="79" fill="#edf5ff" font-weight="bold">2 • SPLIT</text><text x="117" y="108" fill="#b9cbed" font-size="15">Parallel hash + blobs</text></g>
+    <path d="M583 168H619" stroke="#74cfef" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+    <g transform="translate(634 100)"><rect width="234" height="139" rx="24" fill="url(#card)" stroke="#6787bb" stroke-width="2"/><path d="M111 23l11 12 23-22" stroke="#9bf8da" fill="none" stroke-width="7" stroke-linecap="round"/><text x="117" y="79" fill="#edf5ff" font-weight="bold">3 • VERIFY</text><text x="117" y="108" fill="#b9cbed" font-size="15">Chunks + SHA-256</text></g>
+    <path d="M878 168H914" stroke="#74cfef" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+    <g transform="translate(929 100)"><rect width="234" height="139" rx="24" fill="url(#card)" stroke="#6787bb" stroke-width="2"/><rect x="99" y="17" width="36" height="37" rx="10" fill="#a0b6ff"/><path d="M107 35h20" stroke="#22335c" stroke-width="5"/><text x="117" y="79" fill="#edf5ff" font-weight="bold">4 • PUBLISH</text><text x="117" y="108" fill="#b9cbed" font-size="15">Safe branch commit</text></g>
+    <path d="M1173 168H1209" stroke="#74cfef" stroke-width="4" fill="none" marker-end="url(#arrow)"/>
+    <g transform="translate(1224 100)"><rect width="180" height="139" rx="24" fill="url(#card)" stroke="#6787bb" stroke-width="2"/><path d="M87 20v34m-14-13l14 13 14-13" fill="none" stroke="#9bf8da" stroke-width="6" stroke-linecap="round"/><text x="90" y="79" fill="#edf5ff" font-weight="bold">5 • RESTORE</text><text x="90" y="108" fill="#b9cbed" font-size="14">Rebuild locally</text></g>
+  </g>
+  <text x="720" y="286" font-family="Verdana,DejaVu Sans,sans-serif" fill="#9cc9e7" font-size="16" text-anchor="middle">Workers parallelize immutable uploads • one coordinator serializes Git writes • no force-push</text>
+</svg>
