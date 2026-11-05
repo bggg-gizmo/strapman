@@ -78,7 +78,7 @@ def test_existing_upload_only_checkpoint_can_be_built_without_new_commit(tmp_pat
 
 
 def test_top_workflow_is_not_duplicate_of_sidebar():
-    source = (Path(__file__).resolve().parents[1] / 'strapman' / 'ui.py').read_text()
+    source = (Path(__file__).resolve().parents[1] / 'strapman' / 'ui.py').read_text(encoding='utf-8')
     assert 'self._workflow_sections' in source
     assert 'def _jump_workflow' in source
     assert 'button.clicked.connect(lambda checked=False, n=index: self._jump_workflow(n))' in source

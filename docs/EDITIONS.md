@@ -36,7 +36,7 @@ The current milestone is a private development split. It is not a declaration th
 
 ## Reusing the Python runtime across updates
 
-`install.py` shares one compatible user-local Python runtime between Lite and Bootlegger, independent of the source ZIP extraction path. Healthy older `.venv` environments can be reused in place. Both editions retain their own app state. No MP3s are installed as Python packages; the seven original Bootlegger MP3s remain under `bootlegger/assets/sounds/`. The local source-only development ZIP excludes binary sound files, so use the complete GitHub repository ZIP when checking MP3 playback.
+`install.py` shares one compatible user-local Python runtime between Lite and Bootlegger, independent of the source ZIP extraction path. Healthy older `.venv` environments can be reused in place. Both editions retain their own app state. No MP3s are installed as Python packages; the complete repository checkout includes all 16 Bootlegger MP3s under `bootlegger/assets/sounds/`.
 
 ## v0.4.3 voice and workflow policy
 
@@ -56,4 +56,4 @@ Both editions include **Job History → Build / Rebuild**, Repository Desk's rem
 
 ## New GitHub write announcements
 
-Two new owner-supplied clips extend Bootlegger from 14 to **16** named MP3 notifications: `readme_updated.mp3` after a successful GitHub README commit, and `codebase_updated.mp3` after a successfully committed non-README source file in Repository Code Workbench. Each clip must exist, byte-exact, in both `assets/sounds/` and `bootlegger/assets/sounds/`. Lite uses its original OS tone instead; Headless remains silent. Neither a failed GitHub write nor a local-only edit should announce that GitHub was updated.
+Two new owner-supplied clips extend Bootlegger from 14 to **16** named MP3 notifications: `readme_updated.mp3` after a successful GitHub README commit, and `codebase_updated.mp3` after a successfully committed non-README source file in Repository Code Workbench. Each clip exists, byte-exact, in both `assets/sounds/` and `bootlegger/assets/sounds/`. Lite uses its original OS tone instead; Headless remains silent. Neither a failed GitHub write nor a local-only edit should announce that GitHub was updated.

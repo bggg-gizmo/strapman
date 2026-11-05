@@ -67,7 +67,8 @@ class HeadlessController:
         self._run: RunContext | None = None
 
     def _status(self) -> dict:
-        return read_json(self.state_path)
+        with self._mutex:
+            return read_json(self.state_path)
 
     def view(self) -> dict:
         state = self._status()
@@ -139,16 +140,16 @@ class HeadlessController:
 
         def monitor() -> None:
             while not run.finished.wait(0.30):
-                state = self._status()
-                if state.get("run_id") != run.run_id:
-                    return
-                self._save_run(state)
-                request = read_json(self.request_path)
-                if request.get("run_id") == run.run_id and request.get("command") == "pause":
-                    engine.request_pause()
-                    self._save_run({**state, "state": "pausing",
-                                    "detail": "Finishing in-flight work before pausing"})
-                    continue
+                with self._mutex:
+                    state = self._status()
+                    if state.get("run_id") != run.run_id or state.get("state") not in {"running", "pausing"}:
+                        return
+                    self._save_run(state)
+                    request = read_json(self.request_path)
+                    if request.get("run_id") == run.run_id and request.get("command") == "pause":
+                        engine.request_pause()
+                        self._save_run({**state, "state": "pausing",
+                                        "detail": "Finishing in-flight work before pausing"})
         watcher = threading.Thread(target=monitor, daemon=True, name="strapman-headless-control")
         watcher.start()
         try:

@@ -8,7 +8,7 @@
 ## Current — Stabilization and controlled public-source testing
 
 - [x] Shared verified Git-blob upload engine, resumable checkpoints, SHA-256 audit and no-overwrite Build/Rebuild.
-- [x] Desktop Lite and Bootlegger with theme selection, unique branding, and 14 voice MP3 events (Lite: standard OS audio).
+- [x] Desktop Lite and Bootlegger with theme selection, unique branding, and 16 voice MP3 events (Lite: standard OS audio).
 - [x] Sound-free headless CLI with status, dashboard, snapshot, explicit pause/resume, upload, remote/local rebuild and code checks.
 - [x] Repository Desk GitHub README editing and remote/local text workbench with explicit code validation and local testing.
 - [x] Atomic checkpoints, hard-exit interruption detection and explicit user-authorized resume.

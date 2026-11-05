@@ -50,7 +50,17 @@ def atomic_json(path: Path, value: dict[str, Any]) -> None:
             stream.write("\n")
             stream.flush()
             os.fsync(stream.fileno())
-        os.replace(tmp_name, path)
+        # Windows readers can briefly hold the old file without delete sharing.
+        # Retry only that transient sharing/access error; other failures still
+        # leave the old checkpoint intact and surface to the caller.
+        for attempt in range(8):
+            try:
+                os.replace(tmp_name, path)
+                break
+            except PermissionError as exc:
+                if os.name != "nt" or getattr(exc, "winerror", None) not in (5, 32) or attempt == 7:
+                    raise
+                time.sleep(0.02)
         # On POSIX, a synced file alone does not durably record its directory
         # entry across a sudden power cut. Sync the parent where supported.
         if os.name != "nt":

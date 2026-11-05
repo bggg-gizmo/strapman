@@ -18,7 +18,7 @@ def test_syntax_is_static(tmp_path):
 
 def test_workbench_backup_and_explicit_save(tmp_path):
     path = tmp_path / "app.py"
-    path.write_text("A = 1\n", encoding="utf-8")
+    path.write_bytes(b"A = 1\n")
     work = TextWorkbench()
     assert work.open(path) == "A = 1\n"
     assert "-A = 1" in work.diff("A = 2\n")
@@ -26,7 +26,7 @@ def test_workbench_backup_and_explicit_save(tmp_path):
     assert path.read_text() == "A = 2\n"
     backups = list(tmp_path.glob("app.py.strapman-*.bak"))
     assert len(backups) == 1
-    assert backups[0].read_text() == "A = 1\n"
+    assert backups[0].read_bytes() == b"A = 1\n"
 
 
 def test_workbench_rejects_external_changes_and_overwrite(tmp_path):

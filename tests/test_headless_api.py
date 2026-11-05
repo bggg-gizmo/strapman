@@ -2,6 +2,7 @@
 import json
 import os
 from pathlib import Path
+from concurrent.futures import ThreadPoolExecutor
 
 from strapman.headless import HeadlessController, _cli_parser, _progress_html, safe_session
 from strapman.workbench import check_syntax
@@ -31,6 +32,27 @@ def test_headless_session_redacts_private_paths():
     assert "token" not in result
     assert "/workspace/private" not in json.dumps(result)
     assert result["source_name"] == "data.bin"
+
+
+def test_headless_status_reads_during_heartbeat_updates(tmp_path):
+    from strapman.core import Journal, Store
+
+    controller = HeadlessController(Store(tmp_path / "checkpoints"), Journal(tmp_path / "logs"))
+    controller._save_run({"run_id": "a" * 32, "state": "running", "done": 0})
+
+    def read_many():
+        for _ in range(120):
+            assert controller._status()["run_id"] == "a" * 32
+
+    def write_many():
+        for done in range(120):
+            controller._save_run({"run_id": "a" * 32, "state": "running", "done": done})
+
+    with ThreadPoolExecutor(max_workers=4) as pool:
+        jobs = [pool.submit(read_many) for _ in range(3)] + [pool.submit(write_many)]
+        for job in jobs:
+            job.result()
+    assert controller._status()["done"] == 119
 
 
 def test_headless_offline_rebuild_does_not_request_github_login(tmp_path, monkeypatch):

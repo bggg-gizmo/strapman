@@ -24,9 +24,9 @@ The selection applies immediately and persists across restarts. Bootlegger inclu
 
 ## Audio cues
 
-Pro uses the seven existing `.mp3` sound cues under `bootlegger/assets/sounds/` for launch, first-run GitHub setup, completed tasks, errors, exit, power restoration and power disconnection. Settings include a sound toggle and preview selector. Events on systems without an available power sensor do not fire power cues.
+Pro uses 16 event-specific `.mp3` recordings under `bootlegger/assets/sounds/`, including the new README and codebase update announcements after confirmed GitHub commits. Settings include separate Sound and Voice toggles plus a cue preview selector. Events on systems without an available power sensor do not fire power cues.
 
-MP3 playback depends on the platform's Qt Multimedia codec support; the program falls back to a system beep if an MP3 cannot be played. Sounds are on by default and can be disabled at any time. The shared GitHub transfer engine is unchanged and never uploads these assets on its own.
+Windows tries native MCI playback, then Qt Multimedia. The audio status and log report backend failures; Pro does not claim a failed MP3 played or silently replace it with a beep. Sound and voice are on by default and can be disabled independently. With Voice off and Sound on, Pro uses a standard tone. The shared GitHub transfer engine is unchanged and never uploads these assets on its own.
 
 See [shared USERMAN](../docs/USERMAN.md) and [the editions guide](../docs/EDITIONS.md).
 

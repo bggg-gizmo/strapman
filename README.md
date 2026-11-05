@@ -8,7 +8,7 @@
 
 </div>
 
-> **PRIVATE TESTING SNAPSHOT — v0.5.1-dev.** This repository is intentionally private while the Windows/Linux GUI, voice playback, authentication, multipart transfer and restore workflows complete real-device acceptance testing. Do not treat this code as a certified public production release.
+> **PRIVATE TESTING SNAPSHOT — v0.5.2-dev.** This repository is intentionally private while the Windows/Linux GUI, voice playback, authentication, large multipart transfer and restore workflows complete real-device acceptance testing. Do not treat this code as a certified public production release.
 
 ## Why Strapman exists
 
@@ -19,7 +19,7 @@ Headless Strapman provides a sound-free, command-line interface for local script
 ## Editions
 
 - **Strapman Lite:** Windows/Linux GUI, GitHub repository desk, chunked and staged uploads, remote verification, robust pause/resume, file restoration, local/remote code workbench and built-in system notification tones.
-- **Bootlegger Pro:** Everything in Lite, plus purple/black, pink/white and blue/white themes, a distinct leg-lamp-inspired icon, and 14 optional event-specific voice MP3 cues.
+- **Bootlegger Pro:** Everything in Lite, plus purple/black, pink/white and blue/white themes, a distinct leg-lamp-inspired icon, and 16 optional event-specific voice MP3 cues.
 - **Headless Strapman:** JSON status, upload, pause, resume, audit, rebuild, safe reconstruction, local code checks, dashboard and on-demand status snapshots. No voice or paid CI runner.
 
 All editions share the same underlying source validation, checksum and GitHub upload/rebuild engine.
@@ -66,7 +66,7 @@ Run the local checks from the extracted root when development dependencies are p
     python tools/public_audit.py
     python tools/verify_audio_assets.py
 
-The last development-source review recorded **110 passing Python automated tests** with mocked GitHub network responses and real local filesystem tests. That is not the same as real Windows, Linux or GitHub API certification.
+The current complete-checkout Windows review recorded **122 passing Python automated tests** and **32/32 byte-verified Bootlegger MP3 copies**. A private disposable GitHub repository also passed a generated three-part upload, pause after a committed part, explicit resume, remote manifest readback and byte-exact local reconstruction. A separate Headless CLI upload completed its default verified reconstruction. Native speaker output, a 1+ GiB transfer, reboot recovery, OAuth registration and native GUI layout still need acceptance testing.
 
 ## Documentation
 
@@ -95,3 +95,5 @@ Do not publish private tokens, OS account paths, complete backups or user logs. 
 The Bootlegger icon is stacked **above** the complete wordmark. Existing sidebar page entries are preserved, while the top controls move **within the active page** rather than duplicating the sidebar. All editions share the corrected engine; sound-free Headless defaults to reconstruction and returns a distinct nonzero incomplete-rebuild state. An explicit publish-only opt-out is preserved.
 
 GitHub's 100 MiB ordinary Git file limit still applies to *individual* files; the reconstructed original lives in local storage, not as one oversized file in the GitHub tree. See [WORKFLOW.md](docs/WORKFLOW.md) and [SPECS.md](SPECS.md). Real Windows/Linux, speaker and disposable-GitHub acceptance testing remains open; this repository stays private until approved.
+
+The complete checkout now includes all 16 Bootlegger MP3 cues. `readme_updated.mp3` follows a confirmed GitHub README commit; `codebase_updated.mp3` follows a confirmed non-README code commit. Lite retains system tones and Headless remains silent. Run `python tools/verify_audio_assets.py` to check all 32 bundled MP3 copies before previewing them in Settings.

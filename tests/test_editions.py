@@ -74,7 +74,7 @@ def test_bootlegger_windows_ico_is_complete_and_multiresolution():
 def test_separate_app_state(monkeypatch, tmp_path):
     monkeypatch.delenv("STRAPMAN_DATA_DIR", raising=False)
     monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path))
-    monkeypatch.setattr("strapman.core.os.name", "posix")
+    monkeypatch.setenv("LOCALAPPDATA", str(tmp_path))
     monkeypatch.setenv("STRAPMAN_EDITION", LITE)
     lite = app_directory()
     monkeypatch.setenv("STRAPMAN_EDITION", BOOTLEGGER)

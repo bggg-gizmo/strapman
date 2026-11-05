@@ -25,7 +25,7 @@ It is NOT a GitHub Actions runner, general-purpose hosted CI service, torrent sw
 ### 2.2 Bootlegger Pro
 - Full shared engine and all Lite features; not a reduced or incompatible storage format.
 - Purple Night (purple/black), Pink Pearl (pink/white) and Blue Frost (blue/white) themes; user choice persists.
-- Original leg-lamp-inspired GitHub-shade identity, PNG/ICO files, and 14 event-specific MP3 voice announcements.
+- Original leg-lamp-inspired GitHub-shade identity, PNG/ICO files, and 16 event-specific MP3 voice announcements.
 - Master sound and independent voice toggles default on; fallback/error reporting must never pretend a failed MP3 actually played.
 - Battery/AC state voice reminders where supported by the operating system; no device power telemetry is uploaded.
 - No paid-license verification, payment processing, entitlement service or enforced Pro paywall exists as of v0.5.1.
@@ -120,7 +120,7 @@ It is NOT a GitHub Actions runner, general-purpose hosted CI service, torrent sw
 - Show current stage, file count/bytes, verified bytes, speed/ETA when known, actual committed progress, checkpoint ID and error/paused state separately.
 - Show clear user choices when a target file already exists or repository permissions are insufficient.
 - Both editions notify on the same operational events; Lite uses standard system tones, Bootlegger Pro uses event-specific voice assets when enabled.
-- Pro audio mapping (14 original files):
+- Pro audio mapping (14 original files plus two repository-write announcements):
   - First-run GitHub setup: first_run_github_setup.mp3
   - Connected and ready: application_ready.mp3
   - Error/timeout: application_error.mp3
@@ -135,8 +135,10 @@ It is NOT a GitHub Actions runner, general-purpose hosted CI service, torrent sw
   - Repository made private: repository_private.mp3
   - Vulnerability alerts enabled: vulnerability_alerts_enabled.mp3
   - Automated security fixes enabled: automated_security_fixes_enabled.mp3
+  - Confirmed GitHub README commit: readme_updated.mp3
+  - Confirmed non-README GitHub code commit: codebase_updated.mp3
 - Voice queue overflow and backend failure must be visible and testable; do not silently substitute a beep while claiming MP3 playback succeeded. A manual preview must be available.
-- The original MP3s and two multipart backup-source clips are preserved byte-for-byte in the private development repository; public test packages should carry required Bootlegger assets.
+- The 16 complete MP3s and the original multipart backup-source clips are preserved byte-for-byte in the private development repository; test packages should carry every required Bootlegger asset.
 
 ## 11. Logs, diagnostics, privacy and security
 
@@ -173,7 +175,7 @@ It is NOT a GitHub Actions runner, general-purpose hosted CI service, torrent sw
 4. Real disposable-repository README editing, file-create conflict, branch selection, repo creation and security toggle checks.
 5. Small source staging and 1+ GiB multipart upload to a disposable GitHub repository; verify visible committed tree, restart, pause, resume, audit and reconstruct with exact SHA-256.
 6. Confirm a failed optional local reconstruction never falsifies remote complete status; confirm atomic no-overwrite on Windows/Linux.
-7. Real audio output for all 14 Pro cues, master/voice toggles, queuing, one-minute unplugged alert and reconnect behavior where hardware supports AC telemetry.
+7. Real audio output for all 16 Pro cues, master/voice toggles, queuing, one-minute unplugged alert and reconnect behavior where hardware supports AC telemetry.
 8. Headless CLI operations, token-protected dashboard, status and snapshot; no unapproved actions or background writes.
 9. Versioned, reproducible source/installer bundles; explicit owner choice of Windows executable format and icon before compiling an EXE.
 10. Gitea/Forgejo integration tests and capability gates before those providers appear in supported-provider lists.

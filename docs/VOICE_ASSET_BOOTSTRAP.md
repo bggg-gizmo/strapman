@@ -1,8 +1,8 @@
 # Bootlegger README and codebase audio bootstrap
 
-The current software event map supports two owner-provided recordings: codebase_updated.mp3 (110,385 bytes) and readme_updated.mp3 (89,069 bytes). They are intended for the source sounds directory and the Bootlegger Pro sounds directory. The application and audit code will expect 16 events, 32 MP3 copies total.
+The current software event map supports two additional owner-provided recordings: codebase_updated.mp3 (110,385 bytes) and readme_updated.mp3 (89,069 bytes). Both are now included, byte-for-byte unchanged, in the source sounds directory and the Bootlegger Pro sounds directory. The complete checkout contains 16 events and 32 MP3 copies.
 
-**Code and catalog changes do not mean the audio bytes are already committed to GitHub.** The separate source package contains the original recordings, checksum-verified chunk files and a safe bootstrap publisher.
+The separate bootstrap package below was prepared before the binary files could be published. It is retained as a recovery option for an older code-only checkout; a current complete checkout does not need it. Do not run it when all four new MP3 paths already match their catalog hashes.
 
 To publish, extract the file named Strapman-Bootlegger-Voice-2-clip-GitHub-Bootstrap.zip to a new folder on the authenticated machine. In that folder, use:
 
@@ -19,10 +19,10 @@ Original MP3 SHA-256:
 
 No existing asset is overwritten if its hash differs. Source originals are not deleted. The uploader can be safely resumed and skips already matching committed parts. Local Git Credential Manager login, an existing GitHub CLI login or GH_TOKEN/GITHUB_TOKEN are accepted; no login, CLI installation or new Python dependencies are forced.
 
-After publishing, download a complete updated repository checkout and run:
+In a complete updated repository checkout, run:
 
     python tools/verify_audio_assets.py
 
-The required result is 32/32 MP3 copies verified for 16 mapped events. Windows speaker playback remains a separate acceptance check.
+The verified result on Windows was 32/32 MP3 copies for 16 mapped events. Windows MCI initialization failed in this test environment, so audible speaker playback remains a separate acceptance check.
 
 The new recording cues play only after successful SHA-confirmed GitHub commits: README commits use the README clip and other remote workbench file commits use the codebase clip. Lite continues to use OS sounds; Headless remains silent. Keep both repositories private until the user authorizes public release. No WatchMan changes.

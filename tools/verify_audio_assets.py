@@ -18,10 +18,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 from strapman.editions import SOUND_EVENTS
 
-# The original 14 Git blob IDs were verified against the development repository.
-# The two newly supplied recordings were verified byte-for-byte locally; their
-# GitHub publication is not confirmed until the private bootstrap publisher
-# commits the finished files and checks the remote tree/readback.
+# The original 14 Git blob IDs and two additional owner-supplied recordings
+# are pinned below. Run this against a complete checkout to prove installed
+# bytes; source mapping alone is not proof of packaged audio or playback.
 # Each tuple is (file size, Git blob object ID). No token or device path is stored.
 EXPECTED = {
     "application_error.mp3": (142986, "0cb6b85020a68058a2696561551ef3cf16fb1d1c"),
