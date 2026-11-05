@@ -1,99 +1,176 @@
 <div align="center">
 
-# Strapman Lite · Bootlegger Pro · Headless Strapman
+<img src="assets/strapman-mark.svg" alt="Strapman project mark" width="76" height="76">
 
-**Local-first GitHub uploads, integrity verification, file reconstruction and developer tools.**
+# Strapman
 
-**Background Gremlin Group — Creating Unique Tools for Unique Individuals**
+<img src="assets/strapman-hero.svg" alt="Strapman — Your Files. Your GitHub. Your Control." width="100%">
+
+**Your files. Your GitHub. Your control.**
+
+*Local-first, integrity-verified file transfers and reconstruction for developers, creators, and AI coding agents.*
+
+[![Version](https://img.shields.io/badge/Version-v0.5.2--dev-9b73ef?style=for-the-badge)](https://github.com/bggg-gizmo/strapman)
+[![Testing](https://img.shields.io/badge/Status-Private_Testing-f3b355?style=for-the-badge)](#project-status)
+[![Python](https://img.shields.io/badge/Python-3.10%2B-3b90d6?style=for-the-badge&logo=python&logoColor=white)](#get-started)
+[![Windows](https://img.shields.io/badge/Windows-Desktop-67d6e8?style=for-the-badge&logo=windows&logoColor=white)](#get-started)
+[![Linux](https://img.shields.io/badge/Linux-Desktop-92b8ff?style=for-the-badge&logo=linux&logoColor=white)](#get-started)
+
+[![No paid runners required](https://img.shields.io/badge/GitHub_Actions-Not_Required-55d5b6?style=flat-square)](#why-strapman)
+[![SHA-256](https://img.shields.io/badge/Integrity-SHA--256-76d8f5?style=flat-square)](#verified-transfer--rebuild)
+[![Pause & Resume](https://img.shields.io/badge/Recovery-Pause_%26_Resume-b89aff?style=flat-square)](#verified-transfer--rebuild)
+[![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-e889d5?style=flat-square)](#help-shape-strapman)
+
+**[Get Started](#get-started) · [Choose Your Edition](#three-ways-to-run-strapman) · [How It Works](#verified-transfer--rebuild) · [Report an Issue](https://github.com/bggg-gizmo/strapman/issues/new) · [Discussions](https://github.com/bggg-gizmo/strapman/discussions) · [Pull Requests](https://github.com/bggg-gizmo/strapman/pulls)**
+
+**Background Gremlin Group**  
+*Creating Unique Tools for Unique Individuals*
 
 </div>
 
-> **PRIVATE TESTING SNAPSHOT — v0.5.2-dev.** This repository is intentionally private while the Windows/Linux GUI, voice playback, authentication, large multipart transfer and restore workflows complete real-device acceptance testing. Do not treat this code as a certified public production release.
+---
 
-## Why Strapman exists
+## Why Strapman?
 
-Not everyone can or wants to spend credits on hosted runners, CI jobs or GitHub Actions. Strapman performs its large-file staging, chunked transfers, integrity checks, recovery and reconstruction locally, through direct GitHub APIs. No paid GitHub Actions are required for its core workflow.
+Big files, unreliable connections, interrupted uploads, and limited CI budgets shouldn't make managing a Git repository feel like a second job.
 
-Headless Strapman provides a sound-free, command-line interface for local scripts and AI coding assistants to stage and rebuild large files without re-explaining the complete bootstrap procedure each time. Remote actions still require the user's explicit account, repository, branch and authorization.
+**Strapman does the heavy lifting on your machine.** It splits large files into GitHub-compatible parts, uploads them with configurable workers, commits verified chunks and a reconstruction manifest, and rebuilds an identical local copy—without requiring GitHub Actions, paid runners, or hosted build jobs.
 
-## Editions
+The same engine powers its desktop editions and its headless interface for scripts and AI coding agents. GitHub storage/API limits and network connectivity still apply.
 
-- **Strapman Lite:** Windows/Linux GUI, GitHub repository desk, chunked and staged uploads, remote verification, robust pause/resume, file restoration, local/remote code workbench and built-in system notification tones.
-- **Bootlegger Pro:** Everything in Lite, plus purple/black, pink/white and blue/white themes, a distinct leg-lamp-inspired icon, and 16 optional event-specific voice MP3 cues.
-- **Headless Strapman:** JSON status, upload, pause, resume, audit, rebuild, safe reconstruction, local code checks, dashboard and on-demand status snapshots. No voice or paid CI runner.
+## Three ways to run Strapman
 
-All editions share the same underlying source validation, checksum and GitHub upload/rebuild engine.
+<div align="center">
 
-## Launch
+<table>
+<tr>
+<td align="center" width="33%"><a href="lite/README.md"><img src="lite/assets/strapman-lite-icon.png" width="88" alt="Strapman Lite icon"></a><h3><a href="lite/README.md">Strapman Lite</a></h3><strong>The classic</strong></td>
+<td align="center" width="34%"><a href="bootlegger/README.md"><img src="bootlegger/assets/bootlegger-icon.png" width="88" alt="Bootlegger Pro leg-lamp icon"></a><h3><a href="bootlegger/README.md">Bootlegger Pro</a></h3><strong>More personality</strong></td>
+<td align="center" width="33%"><a href="docs/HEADLESS.md"><img src="assets/strapman-mark.svg" width="88" alt="Headless Strapman project mark"></a><h3><a href="docs/HEADLESS.md">Headless Strapman</a></h3><strong>Built for automation</strong></td>
+</tr>
+<tr>
+<td valign="top">Retro desktop interface, GitHub repository management, verified uploads and rebuilds, recovery, and native notification tones.</td>
+<td valign="top">Everything in Lite, with Purple Night, Pink Pearl, and Blue Frost themes, a custom icon, and <strong>16 optional MP3 voice announcements</strong>.</td>
+<td valign="top">Sound-free CLI for developers, scripts, ChatGPT, Codex, and other agents, with JSON status, safe resume, builds, and a local progress dashboard.</td>
+</tr>
+</table>
 
-Extract the entire source repository so its assets and dependencies remain in their expected folders. Python 3.10+ is required.
+</div>
 
-**Windows**
-- Lite: double-click lite/Strapman-Lite.cmd
-- Bootlegger: double-click bootlegger/Bootlegger-Pro.cmd
-- Headless: run headless/headless-strapman.cmd status
+All three share the verified transfer engine. Headless does not require the desktop audio stack for ordinary commands. [Compare the editions](docs/EDITIONS.md).
 
-**Linux**
-- Lite: ./lite/Strapman-Lite.sh
-- Bootlegger: ./bootlegger/Bootlegger-Pro.sh
-- Headless: ./headless/headless-strapman.sh status
+## Verified transfer & rebuild
 
-The installer checks disk space and reuses a compatible per-user Python environment instead of reinstalling a full Qt stack for each extracted update.
+<div align="center">
 
-For native GitHub device-code login, a publisher-registered OAuth public client ID must still be bundled. Existing Git credentials, secure tokens, and GitHub CLI may be used according to supported authentication options.
+<img src="assets/stage-flow.svg" width="100%" alt="Illustrated workflow showing selection, chunking, hashing, verification, publication, and reconstruction">
 
-## What is actually supported
+</div>
 
-**Current remote provider: GitHub.** The application uploads small verified Git blobs and commits chunk paths and a reconstruction manifest into the selected branch. A blob uploaded but not attached to the branch is not considered published. It can reconstruct from committed GitHub parts or from a verified offline local cache, refusing to overwrite existing output.
+A standard upload is an **end-to-end automated workflow**, not an upload that leaves you to figure out reconstruction afterward.
 
-**Gitea and Forgejo support are planned for development** and are **not** currently supported by the upload engine. See [ROADMAP.md](ROADMAP.md) for planned provider adapters and test gates.
+| Stage | What happens |
+|:--|:--|
+| **Prepare** | Choose your account, GitHub repository, branch, source file, and upload strategy. Available staging space is checked first. |
+| **Stage & split** | Generate sized parts, SHA-256 checksums, and a durable checkpoint. |
+| **Transfer** | Upload chunks using configurable parallel workers; branch commits are serialized without force pushes. |
+| **Verify** | Confirm the parts are attached to the intended branch and validate the published manifest and checksums. |
+| **Automatically rebuild** | Download the committed chunks, reconstruct the original **locally**, and confirm its full SHA-256. |
+| **Complete or recover** | Show the verified output location. On interruption, preserve the original, committed data, and checkpoint for explicit Resume. |
 
-GitHub-hosted Actions, hosted builders, arbitrary executable compilation, hosted databases, and automatic deletion/reclaim of original source files are **not** part of the current product.
+The automatic rebuilt file can be opened from Upload Station. **Jobs & Rebuild** remains available when you need a separate manual restore. Advanced users can explicitly choose publish-only behavior.
 
-## How to help test
+**Important:** GitHub's ordinary Git file-size limit still applies to individual committed files. Strapman stores the chunks and manifest in the repository; a large final file is reconstructed on your local machine, not assembled by a GitHub-hosted runner.
 
-Use a disposable repository and non-sensitive sample data, not production backups. Exercise:
-1. First-run sign-in, repository/branch selection and README editing.
-2. Multi-chunk upload and remote SHA-256 verification.
-3. Safe Pause; exit the application; relaunch and explicitly Resume from Job History.
-4. Build/Rebuild the downloaded parts; compare SHA-256 to the original.
-5. Bootlegger voice previews, power notices, all three themes and window resizing.
-6. Headless CLI status, commands and safe local progress dashboard.
+### More than transfers
 
-Run the local checks from the extracted root when development dependencies are present:
+- **Repository Desk:** Browse repositories and branches, create or edit README files, manage supported repository settings, and commit source edits with SHA conflict protection.
+- **Built-in code workbench:** Inspect, diff, and validate local or GitHub text files; run user-approved local tests.
+- **Safe recovery:** Pause jobs gracefully, inspect saved work after an unexpected exit, and explicitly resume without repeating already-verified remote commits.
+- **Audio with control:** Bootlegger voice previews and separate Sound/Voice toggles; Lite's system tones; zero audio in Headless.
+- **Agent visibility:** Headless JSON status, loopback-only dashboard, and optional progress snapshots.
+- **No surprise cleanup:** Originals are never automatically deleted, reclaimed, or overwritten.
+
+## Get started
+
+**Requirements:** Windows or Linux and Python 3.10 or later. Download/extract the **complete source ZIP** so the launchers, artwork, and Bootlegger MP3 files stay together.
+
+<div align="center">
+
+[![Download Source](https://img.shields.io/badge/Download-Source_ZIP-9b73ef?style=for-the-badge&logo=github)](https://github.com/bggg-gizmo/strapman/archive/refs/heads/main.zip)
+[![Read User Manual](https://img.shields.io/badge/Read-User_Manual-54bccd?style=for-the-badge)](docs/USERMAN.md)
+[![Troubleshooting](https://img.shields.io/badge/Help-Troubleshooting-4578c4?style=for-the-badge)](docs/HELPMAN.md)
+
+</div>
+
+| Edition | Windows launcher | Linux launcher |
+|:--|:--|:--|
+| **Lite** | <code>lite\Strapman-Lite.cmd</code> | <code>./lite/Strapman-Lite.sh</code> |
+| **Bootlegger Pro** | <code>bootlegger\Bootlegger-Pro.cmd</code> | <code>./bootlegger/Bootlegger-Pro.sh</code> |
+| **Headless** | <code>headless\headless-strapman.cmd status</code> | <code>./headless/headless-strapman.sh status</code> |
+
+The desktop installer checks free space and reuses a compatible local Python environment when available. Headless's non-visual commands avoid installing desktop/audio dependencies.
+
+GitHub CLI is **not mandatory**. Supported existing credentials can be reused; secure token options are available. Standalone device-code login requires the project's publisher OAuth client ID to be registered and configured.
+
+For complete commands and agent integration, see the [Headless guide](docs/HEADLESS.md).
+
+## Help shape Strapman
+
+**Bug reports, ideas, testing notes, thoughtful feedback, and code contributions are welcome.** Whether you use Lite, Bootlegger, or Headless, your input helps improve reliability and usability.
+
+<div align="center">
+
+[![Report a Bug](https://img.shields.io/badge/Issues-Report_a_Bug-ec7979?style=for-the-badge&logo=github)](https://github.com/bggg-gizmo/strapman/issues/new)
+[![Start a Discussion](https://img.shields.io/badge/Discussions-Share_an_Idea-8f80e8?style=for-the-badge&logo=github)](https://github.com/bggg-gizmo/strapman/discussions)
+[![Contribute Code](https://img.shields.io/badge/Pull_Requests-Contribute_Code-4bbf9d?style=for-the-badge&logo=github)](https://github.com/bggg-gizmo/strapman/pulls)
+
+</div>
+
+- **[Submit an issue](https://github.com/bggg-gizmo/strapman/issues/new):** Report reproducible bugs or request specific features. Include the edition, operating system, steps, expected behavior, and actual result.
+- **[Join a discussion](https://github.com/bggg-gizmo/strapman/discussions):** Share ideas, propose improvements, ask questions, and help decide what comes next.
+- **[Create a pull request](https://github.com/bggg-gizmo/strapman/compare):** Work in a separate branch, explain the change and how you tested it, then open a PR for review. Existing features and data-integrity safeguards should remain intact.
+- **[Review the roadmap](ROADMAP.md):** GitHub remains the supported provider today. Gitea and Forgejo are planned; provider-independent support is being researched and developed.
+
+For code contributions, run the applicable tests before opening a PR. **Never paste access tokens, private repositories, local paths, or unredacted logs into an issue, discussion, or PR.** Report suspected security vulnerabilities through a private maintainer contact channel rather than publicly disclosing secrets.
+
+## Testing & project status
+
+**v0.5.2-dev — controlled testing.** The documented complete-checkout review reports **122 passing Python tests**, **32/32 verified Bootlegger MP3 copies**, and a successful disposable-repository multipart upload/pause/resume/rebuild round-trip. Work remains on larger transfers, Windows/Linux GUI and speaker acceptance, reboot recovery, and publisher OAuth setup.
+
+From the repository root, with the appropriate test dependencies installed:
 
     python -m pytest -q
     python tools/public_audit.py
     python tools/verify_audio_assets.py
 
-The current complete-checkout Windows review recorded **122 passing Python automated tests** and **32/32 byte-verified Bootlegger MP3 copies**. A private disposable GitHub repository also passed a generated three-part upload, pause after a committed part, explicit resume, remote manifest readback and byte-exact local reconstruction. A separate Headless CLI upload completed its default verified reconstruction. Native speaker output, a 1+ GiB transfer, reboot recovery, OAuth registration and native GUI layout still need acceptance testing.
+A full Git checkout can also run <code>python tools/public_audit.py --history</code> to inspect reachable history. These checks do not replace real-device testing or guarantee that a project has no defects.
+
+The repository is currently **private for testing**. Its visibility will change only when authorized. A public distribution license has not yet been selected; viewing source does not by itself grant redistribution rights.
 
 ## Documentation
 
-- [SPECS.md](SPECS.md) — Complete program specification, architecture, features and acceptance criteria
-- [ROADMAP.md](ROADMAP.md) — GitHub release gates; planned Gitea, Forgejo and future resource-control research
+| Guide | What you'll find |
+|:--|:--|
+| [User manual](docs/USERMAN.md) | Setup, upload, verification, reconstruction, and daily use |
+| [Headless reference](docs/HEADLESS.md) | CLI commands, agent workflows, JSON status, dashboards |
+| [Workflow contract](docs/WORKFLOW.md) | Automatic build/rebuild, pause, resume, completion states |
+| [Bootlegger Pro](bootlegger/README.md) | Themes, icons, voice events, and settings |
+| [Project specification](SPECS.md) | Complete feature and implementation contract |
+| [Roadmap](ROADMAP.md) | Provider support and longer-term direction |
+| [Security & privacy](docs/SECURITY.md) | Credentials, source auditing, and responsible reporting |
+| [Release readiness](docs/RELEASE_READINESS.md) | Completed tests and outstanding acceptance gates |
 
-- docs/USERMAN.md — User manual
-- docs/HELPMAN.md — Troubleshooting
-- docs/FINAL_SWEEP.md — Function and audio coverage
-- docs/RELEASE_READINESS.md — Remaining acceptance gates
-- docs/SECURITY.md — Source, token and data-handling expectations
-- docs/HEADLESS.md — Agent/CLI commands
-- docs/EDITIONS.md — Lite/Bootlegger feature differences
+---
 
-## Safety and publication
+<div align="center">
 
-Do not publish private tokens, OS account paths, complete backups or user logs. Avoid unexpected remote writes and never force-push to repair a resumed upload. **This snapshot is private until the owner approves a public visibility change.** Do not infer an open-source license from the ability to view or test the code; licensing must be selected by the owner before broad distribution.
+<img src="assets/strapman-mark.svg" alt="Background Gremlin Group mark" width="52">
 
-**Developed by Background Gremlin Group.**
+**Built by Background Gremlin Group**
 
+*Creating Unique Tools for Unique Individuals*
 
-## v0.5.2 private testing correction
+**[Issues](https://github.com/bggg-gizmo/strapman/issues) · [Discussions](https://github.com/bggg-gizmo/strapman/discussions) · [Pull Requests](https://github.com/bggg-gizmo/strapman/pulls) · [Roadmap](ROADMAP.md)**
 
-**Standard upload is now an end-to-end workflow by default:** stage and hash the source, upload Git blobs, verify chunks committed to the selected branch, download and reconstruct the original **locally**, compare its SHA-256 and only then report completion. The verified rebuilt copy's path is displayed in Upload Station. Manual Build/Rebuild is retained for independent later recovery; it is not a required follow-up after a normal upload.
-
-The Bootlegger icon is stacked **above** the complete wordmark. Existing sidebar page entries are preserved, while the top controls move **within the active page** rather than duplicating the sidebar. All editions share the corrected engine; sound-free Headless defaults to reconstruction and returns a distinct nonzero incomplete-rebuild state. An explicit publish-only opt-out is preserved.
-
-GitHub's 100 MiB ordinary Git file limit still applies to *individual* files; the reconstructed original lives in local storage, not as one oversized file in the GitHub tree. See [WORKFLOW.md](docs/WORKFLOW.md) and [SPECS.md](SPECS.md). Real Windows/Linux, speaker and disposable-GitHub acceptance testing remains open; this repository stays private until approved.
-
-The complete checkout now includes all 16 Bootlegger MP3 cues. `readme_updated.mp3` follows a confirmed GitHub README commit; `codebase_updated.mp3` follows a confirmed non-README code commit. Lite retains system tones and Headless remains silent. Run `python tools/verify_audio_assets.py` to check all 32 bundled MP3 copies before previewing them in Settings.
+</div>
