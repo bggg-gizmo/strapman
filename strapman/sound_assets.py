@@ -1,7 +1,7 @@
 """Validate and reconstruct multipart, owner-supplied Bootlegger voice clips.
 
 No network access, source deletion, file overwrite, conversion or audio
-transcoding is used. Two large MP3s were delivered as Git-tracked .part blobs.
+transcoding is used. New recordings may also be delivered as checksum-pinned Git-tracked .part blobs.
 """
 from __future__ import annotations
 
@@ -16,6 +16,21 @@ class AudioAssetError(RuntimeError):
 
 
 PARTS = {
+    "codebase_updated.mp3": {
+        "sha256": "9bcc3101de57b113aa88e359ec8a748ace381de6a27463e9b22c103b32af6cf2",
+        "parts": (
+            ("000", "88cb55cda25619fd1d42fa767483798b1b52c8c43a7c804b759d0ee3aa612d93"),
+            ("001", "081ec389bdce0b67bfa0ca3120f0b4e368ca86eb5647fee435d197a8faabdbdd"),
+            ("002", "0e66b3bb11793c4480acc849b628fd62a1187732d597f04cbe6c60da6a4018f5"),
+        ),
+    },
+    "readme_updated.mp3": {
+        "sha256": "83ddaf10f1eb087bf433bd2b10dc3917423fb5d71360bba888aab16b5586e11e",
+        "parts": (
+            ("000", "b82da81348580004c22fe3ac7508530eda4f98dfea6a9b2409a7ab27879caaf0"),
+            ("001", "0595fdc89c2ea0096dd7e1c55097f2817bcd1bda79902c890a216effbadc9005"),
+        ),
+    },
     "vulnerability_alerts_enabled.mp3": {
         "sha256": "da4487ff8ebfc1d918110d8abcfa3bb07e62e32af64f0dd86f59cffdbc3a5826",
         "parts": (("000", "78ad1827d9e1d054454e10f4233d6c53c09524c66cc16fce3f680726da821972"),
@@ -33,7 +48,7 @@ def ensure_audio_asset(destination: Path, *, verify_only: bool = False) -> str:
     """Verify or construct a supported multipart MP3 at its committed location.
 
     Existing targets are *never* replaced. Missing sources fail visibly.
-    This is intentionally limited to the two known multipart audio clips.
+    Only explicitly checksum-pinned audio clips are eligible for rebuild.
     """
     target = Path(destination)
     spec = PARTS.get(target.name)
