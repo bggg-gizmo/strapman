@@ -10,7 +10,7 @@ This record accompanies the [GNU GPLv3-or-later](LICENSE) licensed project and t
 | Date | Contributor / handle | Contribution | Attribution notes |
 | --- | --- | --- | --- |
 | 2026 | **Background Gremlin Group** (`@bggg-gizmo`) | Original Strapman project direction, software editions, project branding, Bootlegger identity and source publication | Original project credit. Copyright in individual contributions remains with the respective rightsholders. |
-| 2026-11-05 | **Clank / ChatGPT (OpenAI)** | AI-assisted preparation of the GPL licensing, attribution-chain text, contribution guidance and README documentation in this changeset | Assistance credit only. This entry is **not** a claim of copyright ownership by the AI, authorship of the original project, or endorsement by OpenAI. |
+| 2026-11-05 | **Clank / ChatGPT (OpenAI)** | AI-assisted preparation of the GPL licensing, attribution-chain text, contribution guidance, README documentation, and the public `AGENTS.md` contributor instructions | Assistance credit only. This entry is **not** a claim of copyright ownership by the AI, authorship of the original project, or endorsement by OpenAI. |
 
 Earlier code and asset contributions should retain any credit already established in their source files or project history. This list does not invent identities or ownership assignments for unidentified contributors.
 
