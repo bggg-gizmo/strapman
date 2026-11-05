@@ -46,7 +46,7 @@ For native GitHub device-code login, a publisher-registered OAuth public client 
 
 **Current remote provider: GitHub.** The application uploads small verified Git blobs and commits chunk paths and a reconstruction manifest into the selected branch. A blob uploaded but not attached to the branch is not considered published. It can reconstruct from committed GitHub parts or from a verified offline local cache, refusing to overwrite existing output.
 
-**Gitea and Forgejo support are planned for development** and are **not** currently supported by the upload engine. See ROADMAP.md in the development repository or the edition documentation when provider support is released.
+**Gitea and Forgejo support are planned for development** and are **not** currently supported by the upload engine. See [ROADMAP.md](ROADMAP.md) for planned provider adapters and test gates.
 
 GitHub-hosted Actions, hosted builders, arbitrary executable compilation, hosted databases, and automatic deletion/reclaim of original source files are **not** part of the current product.
 
@@ -69,6 +69,9 @@ Run the local checks from the extracted root when development dependencies are p
 The last development-source review recorded **110 passing Python automated tests** with mocked GitHub network responses and real local filesystem tests. That is not the same as real Windows, Linux or GitHub API certification.
 
 ## Documentation
+
+- [SPECS.md](SPECS.md) — Complete program specification, architecture, features and acceptance criteria
+- [ROADMAP.md](ROADMAP.md) — GitHub release gates; planned Gitea, Forgejo and future resource-control research
 
 - docs/USERMAN.md — User manual
 - docs/HELPMAN.md — Troubleshooting
