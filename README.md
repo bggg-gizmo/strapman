@@ -11,7 +11,7 @@
 *Local-first, integrity-verified file transfers and reconstruction for developers, creators, and AI coding agents.*
 
 [![Version](https://img.shields.io/badge/Version-v0.5.2--dev-9b73ef?style=for-the-badge)](https://github.com/bggg-gizmo/strapman)
-[![Testing](https://img.shields.io/badge/Status-Private_Testing-f3b355?style=for-the-badge)](#project-status)
+[![Testing](https://img.shields.io/badge/Status-Public_Testing-55d5b6?style=for-the-badge)](#project-status)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3b90d6?style=for-the-badge&logo=python&logoColor=white)](#get-started)
 [![Windows](https://img.shields.io/badge/Windows-Desktop-67d6e8?style=for-the-badge&logo=windows&logoColor=white)](#get-started)
 [![Linux](https://img.shields.io/badge/Linux-Desktop-92b8ff?style=for-the-badge&logo=linux&logoColor=white)](#get-started)
@@ -136,7 +136,7 @@ For code contributions, run the applicable tests before opening a PR. **Never pa
 
 ## Testing & project status
 
-**v0.5.2-dev — controlled testing.** The documented complete-checkout review reports **122 passing Python tests**, **32/32 verified Bootlegger MP3 copies**, and a successful disposable-repository multipart upload/pause/resume/rebuild round-trip. Work remains on larger transfers, Windows/Linux GUI and speaker acceptance, reboot recovery, and publisher OAuth setup.
+**v0.5.2-dev — public testing.** The documented complete-checkout review reports **122 passing Python tests**, **32/32 verified Bootlegger MP3 copies**, and a successful disposable-repository multipart upload/pause/resume/rebuild round-trip. Work remains on larger transfers, Windows/Linux GUI and speaker acceptance, reboot recovery, and publisher OAuth setup.
 
 From the repository root, with the appropriate test dependencies installed:
 
@@ -146,7 +146,7 @@ From the repository root, with the appropriate test dependencies installed:
 
 A full Git checkout can also run <code>python tools/public_audit.py --history</code> to inspect reachable history. These checks do not replace real-device testing or guarantee that a project has no defects.
 
-The repository is currently **private for testing**. Its visibility will change only when authorized. A public distribution license has not yet been selected; viewing source does not by itself grant redistribution rights.
+The repository is now **public for testing**. Bug reports, discussions, and pull requests are welcome. A public distribution license has not yet been selected; viewing source does not by itself grant redistribution rights.
 
 ## Documentation
 
