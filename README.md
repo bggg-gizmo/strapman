@@ -155,6 +155,7 @@ The repository is **public for testing and open source** under the [GNU GPL vers
 
 | Guide | What you'll find |
 |:--|:--|
+| [Agent instructions](AGENTS.md) | Public instructions for Codex, ChatGPT, coding agents and automation contributors |
 | [License & attribution chain](LICENSE) | GNU GPLv3+, [mandatory notices](NOTICE), [credits](ATTRIBUTION.md), and [contributor guide](CONTRIBUTING.md) |
 | [Public testing checklist](docs/PUBLIC_TESTING_CHECKLIST.md) | Real-world test cases, required evidence, v1.0 release gates |
 | [User manual](docs/USERMAN.md) | Setup, upload, verification, reconstruction, and daily use |

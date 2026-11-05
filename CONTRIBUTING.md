@@ -2,6 +2,8 @@
 
 Thank you for helping make Strapman Lite, Bootlegger Pro, and Headless Strapman better. Bug reports, ideas, testing evidence, documentation and code improvements are welcome.
 
+**Using Codex, ChatGPT or another coding agent?** Read the root [AGENTS.md](AGENTS.md) for the repository architecture, testing workflow, safety invariants, and agent-specific permission boundaries.
+
 - [Open an issue](https://github.com/bggg-gizmo/strapman/issues) for reproducible defects.
 - [Start a discussion](https://github.com/bggg-gizmo/strapman/discussions) to propose features or new provider integrations.
 - [Open a pull request](https://github.com/bggg-gizmo/strapman/pulls) with reviewed, tested changes.
