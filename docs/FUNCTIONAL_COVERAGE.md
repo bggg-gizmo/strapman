@@ -112,3 +112,12 @@ See [CRASH_RECOVERY.md](CRASH_RECOVERY.md) for the exact recovery contract. The 
 on current source, and static compilation passed. Audio-byte verification
 must run from a complete checkout; external platform certification is not
 claimed. See [FINAL_SWEEP.md](FINAL_SWEEP.md).
+
+
+## v0.5.2 — Corrected required workflow semantics
+
+- **Desktop default**: stage, upload, verify committed GitHub parts/manifest, locally rebuild from GitHub chunks, verify complete SHA-256, then announce job completion. An explicit user opt-out can publish-only.
+- **Headless default**: same phases, no sounds. `--no-reconstruct` is an explicit exception; incomplete auto rebuild produces `needs_rebuild` with nonzero exit code 5 instead of success.
+- **Recovery**: remote commit identity is retained even when local build pauses or fails; retry/resume verifies and reuses it without a duplicate remote commit. No original/source deletion or output overwrite.
+- **UI**: persistent sidebar pages unchanged, Bootlegger branding stacked icon-over-wordmark, top strip changes only which section is in view within the current page. Manual Build/Rebuild remains available for independent recovery.
+- **Evidence**: 105 local regression tests passed on the available source snapshot, including new automatic reconstruction, failed rebuild and pause/restart scenarios. Previously recorded 110-test baseline included headless modules absent from this local code-only workspace; the combined published project still requires full-suite rerun. Native Qt/live GitHub acceptance is open.

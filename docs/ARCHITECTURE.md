@@ -77,3 +77,10 @@ local code. README and remote-code commit callbacks discard optimistic
 SHA bindings if a newer draft or destination supersedes a completed write.
 The original 14 Pro audio events can be byte-audited by the independent
 read-only `tools/verify_audio_assets.py` against the published Git blobs.
+
+
+## v0.5.2 — Automatic publication plus verified local reconstruction
+
+The default desktop/headless upload workflow finishes after both remote publication and reconstructed-file verification. The upload session retains `final_commit` and `publication_verified` independently of `reconstruction_status` and `workflow_status`. The manifest is attached and checked before reconstruction begins; a failed/paused rebuild is recorded as `rebuild_failed`/`rebuild_paused`, not end-to-end `complete`. Explicit Resume reuses the existing published remote manifest and avoids a duplicate commit. An internal restore call preserves the parent upload's stop/pause flags so it cannot lose a pause request between phases.
+
+The top strip is now a per-page scroll target controller, not a duplicate sidebar router. Sidebar page controls remain unchanged, and the full Bootlegger brand is vertically stacked with its icon. This is implemented and local-Python-tested but still requires live Qt layout acceptance. See [WORKFLOW.md](WORKFLOW.md).

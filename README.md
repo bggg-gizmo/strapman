@@ -86,3 +86,12 @@ The last development-source review recorded **110 passing Python automated tests
 Do not publish private tokens, OS account paths, complete backups or user logs. Avoid unexpected remote writes and never force-push to repair a resumed upload. **This snapshot is private until the owner approves a public visibility change.** Do not infer an open-source license from the ability to view or test the code; licensing must be selected by the owner before broad distribution.
 
 **Developed by Background Gremlin Group.**
+
+
+## v0.5.2 private testing correction
+
+**Standard upload is now an end-to-end workflow by default:** stage and hash the source, upload Git blobs, verify chunks committed to the selected branch, download and reconstruct the original **locally**, compare its SHA-256 and only then report completion. The verified rebuilt copy's path is displayed in Upload Station. Manual Build/Rebuild is retained for independent later recovery; it is not a required follow-up after a normal upload.
+
+The Bootlegger icon is stacked **above** the complete wordmark. Existing sidebar page entries are preserved, while the top controls move **within the active page** rather than duplicating the sidebar. All editions share the corrected engine; sound-free Headless defaults to reconstruction and returns a distinct nonzero incomplete-rebuild state. An explicit publish-only opt-out is preserved.
+
+GitHub's 100 MiB ordinary Git file limit still applies to *individual* files; the reconstructed original lives in local storage, not as one oversized file in the GitHub tree. See [WORKFLOW.md](docs/WORKFLOW.md) and [SPECS.md](SPECS.md). Real Windows/Linux, speaker and disposable-GitHub acceptance testing remains open; this repository stays private until approved.

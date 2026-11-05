@@ -252,7 +252,8 @@ class Engine:
         # Reconcile the actual published Git tree with the durable local state.
         # This catches branch changes and recovers commits made just before a crash.
         self._reconcile_remote(root, manifest, session, checkpoint_id, prefix, repo, branch, mode)
-        if session.get("status") == "complete":
+        if session.get("final_commit") and session.get("status") in {
+                "complete", "published", "rebuild_failed", "rebuild_paused", "interrupted"}:
             # Never publish a duplicate final commit. Confirm that the manifest
             # and independent chunk paths still correspond to the checkpoint.
             manifest_path = f"{prefix}/manifest.json"
@@ -268,7 +269,8 @@ class Engine:
                 self._verify_remote(repo, branch, prefix, expected, callback, workers)
             self._restore_after_publication(reconstruct, root, manifest, session, checkpoint_id,
                                             repo, branch, prefix, workers, callback)
-            self._notify(callback, "complete", 1, 1, "Already published; remote checkpoint verified")
+            self._finish_upload_workflow(session, checkpoint_id, reconstruct, callback,
+                                         "Existing committed upload checked")
             return dict(session)
         self._update(checkpoint_id, session, status="uploading")
         try:
@@ -311,12 +313,14 @@ class Engine:
             if mode == "source" or publish_full:
                 if self.github.file_sha(repo, branch, remote_path) != expected_final:
                     raise ValueError("Full GitHub file was not published correctly")
-            self._update(checkpoint_id, session, status="complete", final_commit=commit,
-                         manifest_path=f"{prefix}/manifest.json")
-            self.journal.write("upload", "complete", f"Verified upload {manifest['name']} to {repo}:{branch}", upload_id)
-            self._notify(callback, "complete", 1, 1, f"Published manifest and documentation ({commit[:10]})")
+            self._update(checkpoint_id, session, status="published", final_commit=commit,
+                         manifest_path=f"{prefix}/manifest.json", publication_verified=True)
+            self.journal.write("upload", "published", f"Verified remote upload {manifest['name']} to {repo}:{branch}", upload_id)
+            self._notify(callback, "committing", 1, 1, f"Committed manifest ({commit[:10]}); verifying rebuilt original")
             self._restore_after_publication(reconstruct, root, manifest, session, checkpoint_id,
                                             repo, branch, prefix, workers, callback)
+            self._finish_upload_workflow(session, checkpoint_id, reconstruct, callback,
+                                         "New committed upload checked")
             return dict(session)
         except Exception as exc:
             paused = isinstance(exc, InterruptedError) and self.pause_requested.is_set()
@@ -349,8 +353,9 @@ class Engine:
                 return
             target = root / f"remote-restored-{manifest['sha256'][:12]}-{manifest['name']}"
         try:
+            self._check_cancel()
             result = self.restore(repo, branch, f"{prefix}/manifest.json", target,
-                                  workers=workers, callback=callback)
+                                  workers=workers, callback=callback, _preserve_stop=True)
         except JobPaused as exc:
             self._update(checkpoint_id, session, reconstruction_status="paused",
                          reconstruction_error=str(exc))
@@ -368,6 +373,33 @@ class Engine:
             return
         self._update(checkpoint_id, session, reconstruction_status="complete",
                      reconstruction_path=str(result), reconstruction_error="")
+
+    def _finish_upload_workflow(self, session: dict[str, Any], checkpoint_id: str,
+                                reconstruct: bool, callback: Progress | None,
+                                context: str) -> None:
+        """Completion means all requested phases, including automatic rebuild.
+
+        Remote publication has an independent final_commit and remains verified
+        if a local rebuild fails or pauses; subsequent resume reuses the remote
+        manifest without making a second GitHub commit.
+        """
+        result = session.get("reconstruction_status") if reconstruct else "not_requested"
+        if result == "complete" or not reconstruct:
+            self._update(checkpoint_id, session, status="complete", error="",
+                         workflow_status="complete")
+            self.journal.write("workflow", "complete", context, checkpoint_id)
+            self._notify(callback, "complete", 1, 1,
+                         "Remote publication and SHA-256 reconstruction verified" if reconstruct
+                         else "Remote publication verified (reconstruction explicitly disabled)")
+        else:
+            pending = "rebuild_paused" if result == "paused" else "rebuild_failed"
+            self._update(checkpoint_id, session, status=pending,
+                         workflow_status=pending,
+                         error=session.get("reconstruction_error", "Rebuild did not finish"))
+            self.journal.write("workflow", pending, "GitHub publication verified; local rebuild incomplete",
+                               checkpoint_id)
+            self._notify(callback, "assembling", 0, 1,
+                         "GitHub publication verified; reconstruction needs attention")
 
     def _reconcile_remote(self, root: Path, manifest: dict[str, Any], session: dict[str, Any],
                           checkpoint_id: str, prefix: str, repo: str, branch: str, mode: str) -> None:
@@ -616,11 +648,13 @@ class Engine:
                              f"SHA-256 verified {done:,}/{total:,} remote bytes")
 
     def restore(self, repo: str, branch: str, manifest_path: str, destination: Path,
-                *, workers: int = 4, callback: Progress | None = None) -> Path:
-        """Download and restore with a single local reconstruction owner."""
+                *, workers: int = 4, callback: Progress | None = None,
+                _preserve_stop: bool = False) -> Path:
+        """Download/restore with one local owner; respect the parent upload's pause."""
         with self.store.job_lock("restore"):
             return self._restore_locked(repo, branch, manifest_path, destination,
-                                        workers=workers, callback=callback)
+                                        workers=workers, callback=callback,
+                                        _preserve_stop=_preserve_stop)
 
     def discover_builds(self, repo: str, branch: str) -> list[str]:
         """Find committed Strapman manifests without requiring local history."""
@@ -688,14 +722,16 @@ class Engine:
                 raise
 
     def _restore_locked(self, repo: str, branch: str, manifest_path: str, destination: Path,
-                        *, workers: int = 4, callback: Progress | None = None) -> Path:
+                        *, workers: int = 4, callback: Progress | None = None,
+                        _preserve_stop: bool = False) -> Path:
         """Recover from durable downloaded parts, including after process reboot.
 
         The remote manifest and every cached part are revalidated. Reconstruction
         publishes only after complete SHA-256 verification and never overwrites.
         """
-        self.cancel.clear()
-        self.pause_requested.clear()
+        if not _preserve_stop:
+            self.cancel.clear()
+            self.pause_requested.clear()
         if not 1 <= workers <= 12:
             raise ValueError("Worker count must be 1–12")
         destination = Path(destination).expanduser().resolve()

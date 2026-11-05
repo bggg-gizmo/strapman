@@ -389,7 +389,8 @@ def test_optional_restore_failure_does_not_invalidate_published_upload(tmp_path:
         raise OSError("simulated local reconstruction storage failure")
     app.restore = no_local_space
     result = app.upload(source, "owner/repo", "main", reconstruct=True)
-    assert result["status"] == "complete"
+    assert result["status"] == "rebuild_failed"
+    assert result["final_commit"]
     assert result["reconstruction_status"] == "failed"
     assert "simulated local" in result["reconstruction_error"]
     assert app.audit_session(app.store.list_sessions()[0])["complete"]

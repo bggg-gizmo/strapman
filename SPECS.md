@@ -186,3 +186,10 @@ It is NOT a GitHub Actions runner, general-purpose hosted CI service, torrent sw
 - Exclude private agent coordination logs and sensitive development history from public snapshots; preserve AGENT_COORDINATION.md in private development and use a clean initial public commit.
 - Do not automatically switch visibility to public, publish a release binary or run paid Actions. Owner approves those separate steps.
 - Canonical dev roadmap: ROADMAP.md. Research-only resource controls: docs/RESOURCE_CONTROLS_RESEARCH_ROADMAP.md.
+
+
+## v0.5.2 clarification — automatic Build/Rebuild is the normal workflow
+
+For all user-facing editions, the normal upload workflow is: local hash and chunk preparation → Git blob upload → serial branch publication → committed-part and manifest verification → **automatic local reconstruction from the committed GitHub parts** → final SHA-256 verification. End-to-end `complete` is not emitted if requested reconstruction fails or pauses. The remote publication remains retained and separately verifiable; explicit resume reuses it without another commit. Users can deliberately disable post-upload reconstruction for a publish-only run. Manual Build/Rebuild remains as an extra repair/recovery tool, never a required follow-up to standard uploading. GitHub does not allow large (>100 MiB) ordinary Git files and the rebuilt original is local, not a large object assembled inside the repository.
+
+The left sidebar's existing page entries must remain intact. On Bootlegger the brand icon must sit **above** the fully visible brand name. The top bar must contain **context-specific steps within the active page**, not duplicate page destinations. Both desktop and headless modes must report incomplete rebuilds as such.

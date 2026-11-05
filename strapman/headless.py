@@ -154,6 +154,13 @@ class HeadlessController:
         try:
             result = runner(engine, progress)
             state = self._status()
+            workflow_status = result.get("status") if isinstance(result, dict) else None
+            if workflow_status in {"rebuild_failed", "rebuild_paused"}:
+                # A committed upload is not fully complete until reconstruction.
+                detail = result.get("reconstruction_error") or "Remote upload verified; rebuild incomplete"
+                if state.get("run_id") == run.run_id:
+                    self._save_run({**state, "state": "needs_rebuild", "phase": "assembling", "detail": detail})
+                return {"state": "needs_rebuild", "result": _serializable_result(result)}
             if state.get("run_id") == run.run_id:
                 self._save_run({**state, "state": "complete", "phase": "complete", "detail": "Completed and verified"})
             return {"state": "complete", "result": _serializable_result(result)}
@@ -176,7 +183,7 @@ class HeadlessController:
 
     def upload(self, source: str, repo: str, branch: str, *, chunk_mib=4, workers=4,
                mode="chunks", remote_path="", verify_remote=True,
-               reconstruct=False, publish_full=False) -> dict:
+               reconstruct=True, publish_full=False) -> dict:
         # Never infer user authorization for an upload: only explicit invocation starts it.
         return self._execute("upload", Path(source).name, lambda e, progress:
             e.upload(Path(source), repo, branch, chunk_mib=chunk_mib, workers=workers,
@@ -216,7 +223,7 @@ class HeadlessController:
                            mode=session.get("mode", "chunks"),
                            remote_path=session.get("remote_path", ""),
                            verify_remote=bool(session.get("verify_remote", True)),
-                           reconstruct=bool(session.get("reconstruct", False)),
+                           reconstruct=bool(session.get("reconstruct", True)),
                            publish_full=bool(session.get("publish_full", False)))
 
     def verify(self, checkpoint_id: str, *, workers=4) -> dict:
@@ -458,7 +465,7 @@ def _cli_parser() -> argparse.ArgumentParser:
                         help="Choose which existing Lite/Pro checkpoints and credentials to use")
     sub = parser.add_subparsers(dest="operation", required=True)
     sub.add_parser("status", help="Output a current JSON report without requiring GitHub credentials")
-    p = sub.add_parser("upload", help="Upload, verify, publish and optionally reconstruct")
+    p = sub.add_parser("upload", help="Upload, verify, publish and automatically rebuild the original")
     p.add_argument("--source", required=True)
     p.add_argument("--repo", required=True)
     p.add_argument("--branch", default="main")
@@ -467,7 +474,11 @@ def _cli_parser() -> argparse.ArgumentParser:
     p.add_argument("--mode", choices=("chunks", "source"), default="chunks")
     p.add_argument("--remote-path", default="")
     p.add_argument("--skip-remote-verify", action="store_true")
-    p.add_argument("--reconstruct", action="store_true", help="Verified local build from GitHub after publication")
+    p.set_defaults(reconstruct=True)
+    p.add_argument("--reconstruct", dest="reconstruct", action="store_true",
+                   help="Verify and rebuild after publication (default)")
+    p.add_argument("--no-reconstruct", dest="reconstruct", action="store_false",
+                   help="Explicitly publish and verify only; skip automatic local rebuild")
     p.add_argument("--publish-full", action="store_true")
     p = sub.add_parser("restore", help="Download all parts and verify/reassemble a complete original")
     for name in ("repo", "branch", "manifest", "destination"):
@@ -556,6 +567,8 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(result, indent=2, ensure_ascii=False, default=str))
         if isinstance(result, dict) and result.get("state") == "paused":
             return 3
+        if isinstance(result, dict) and result.get("state") == "needs_rebuild":
+            return 5
         if isinstance(result, dict) and result.get("valid") is False:
             return 4
         return 0

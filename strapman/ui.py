@@ -11,7 +11,7 @@ from pathlib import Path
 from typing import Any, Callable
 
 from PySide6.QtCore import QThread, Qt, QTimer, Signal, QUrl
-from PySide6.QtGui import QFont, QIcon, QPalette, QColor, QPixmap, QSyntaxHighlighter, QTextCharFormat
+from PySide6.QtGui import QFont, QIcon, QPalette, QColor, QPixmap, QSyntaxHighlighter, QTextCharFormat, QDesktopServices
 from PySide6.QtWidgets import (
     QApplication, QCheckBox, QComboBox, QDialog, QFileDialog, QFormLayout,
     QFrame, QGridLayout, QGroupBox, QHBoxLayout, QLabel, QLineEdit, QListWidget, QListWidgetItem, QTabWidget,
@@ -83,6 +83,7 @@ QPushButton#nav:checked { background: #29415c; border-color: #4c7f98;
 QPushButton#workflow { background: #1b2840; border: 1px solid #3c5279; border-radius: 9px;
                          padding: 5px 8px; font-size: 11px; min-height: 24px; color: #cad9ec; }
 QPushButton#workflow:checked { background: #2f4c66; color: #ffffff; border-color: #72b5d5; }
+QLabel#brand { letter-spacing: 0px; }
 QLineEdit, QPlainTextEdit, QTextBrowser, QComboBox, QSpinBox, QListWidget {
   background: #101b31; border: 1px solid #4b6287; border-radius: 10px;
   selection-background-color: #317e92; color: #e5f0ff; padding: 8px;
@@ -305,24 +306,32 @@ class StrapmanWindow(QMainWindow):
         menu = QVBoxLayout(sidebar)
         menu.setContentsMargins(15, 19, 13, 13)
         menu.setSpacing(10)
-        brand_row = QHBoxLayout()
-        brand_row.setSpacing(8)
+        # Brand header only: icon ABOVE full wordmark. Sidebar page entries
+        # retain their original text/icon layout; this block must never clip.
+        brand_header = QVBoxLayout()
+        brand_header.setSpacing(4)
+        brand_top = QHBoxLayout()
         self.brand_icon = QLabel()
-        self.brand_icon.setPixmap(strapman_icon().pixmap(46, 46))
-        self.brand_icon.setFixedSize(46, 46)
+        self.brand_icon.setPixmap(strapman_icon().pixmap(58, 58))
+        self.brand_icon.setFixedSize(62, 62)
+        self.brand_icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.brand_icon.setAccessibleName(f"{self.brand_name} application logo")
-        brand_row.addWidget(self.brand_icon)
-        self.brand_title = label("BOOTLEGGER" if self.edition == BOOTLEGGER else "STRAPMAN", "brand")
-        self.brand_title.setWordWrap(False)
-        self.brand_title.setMinimumWidth(0)
-        brand_row.addWidget(self.brand_title, 1)
+        brand_top.addWidget(self.brand_icon)
+        brand_top.addStretch(1)
         self.sidebar_toggle = QPushButton("≪")
         self.sidebar_toggle.setToolTip("Collapse sidebar to icons")
         self.sidebar_toggle.setAccessibleName("Collapse or expand the navigation sidebar")
         self.sidebar_toggle.setFixedSize(30, 36)
         self.sidebar_toggle.clicked.connect(self._toggle_sidebar)
-        brand_row.addWidget(self.sidebar_toggle)
-        menu.addLayout(brand_row)
+        brand_top.addWidget(self.sidebar_toggle)
+        brand_header.addLayout(brand_top)
+        self.brand_title = label("BOOTLEGGER" if self.edition == BOOTLEGGER else "STRAPMAN", "brand")
+        self.brand_title.setFont(QFont("Segoe UI", 17 if self.edition == BOOTLEGGER else 19, QFont.Weight.Black))
+        self.brand_title.setWordWrap(False)
+        self.brand_title.setMinimumWidth(0)
+        self.brand_title.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+        brand_header.addWidget(self.brand_title)
+        menu.addLayout(brand_header)
         self.brand_subtitle = label("PRO / " + self._theme.upper()
                                     if self.edition == BOOTLEGGER else "LITE / RETRO BUBBLE", "brandSubtitle")
         menu.addWidget(self.brand_subtitle)
@@ -380,18 +389,18 @@ class StrapmanWindow(QMainWindow):
         top.addWidget(self.connection_status)
         center_body.addLayout(top)
 
-        # The workflow strip changes pages only. It never starts a GitHub task.
+        # Contextual workflow steps within the ACTIVE page, NOT a second
+        # navigation menu. Steps scroll to actual controls; no actions run.
         workflow = QHBoxLayout()
         workflow.setSpacing(7)
         self.workflow_buttons = []
-        for index, (_, title) in enumerate(self.nav_pages):
-            button = QPushButton(f"{index + 1:02d}  {title}")
+        self._workflow_sections: dict[int, list[tuple[str, QWidget]]] = {}
+        for index in range(4):
+            button = QPushButton()
             button.setObjectName("workflow")
-            button.setCheckable(True)
-            button.setChecked(index == 0)
-            button.setToolTip(f"Show {title}; does not submit changes")
-            button.setAccessibleName(f"Workflow stage {index + 1}: {title}")
-            button.clicked.connect(lambda checked=False, page=index: self._navigate(page))
+            button.setVisible(False)
+            button.setToolTip("Jump to this section of the current page; nothing is submitted")
+            button.clicked.connect(lambda checked=False, n=index: self._jump_workflow(n))
             workflow.addWidget(button)
             self.workflow_buttons.append(button)
         center_body.addLayout(workflow)
@@ -402,6 +411,32 @@ class StrapmanWindow(QMainWindow):
         self.pages.addWidget(self._make_history())
         self.pages.addWidget(self._make_settings())
         row.addWidget(center, 1)
+        self._update_workflow(0)
+
+    def _update_workflow(self, page: int) -> None:
+        sections = self._workflow_sections.get(page, [])
+        for index, button in enumerate(self.workflow_buttons):
+            if index < len(sections):
+                button.setText(f"{index + 1:02d}  {sections[index][0]}")
+                button.setAccessibleName(f"Jump to {sections[index][0]}")
+                button.setVisible(True)
+            else:
+                button.setVisible(False)
+
+    def _jump_workflow(self, index: int) -> None:
+        page = self.pages.currentIndex()
+        sections = self._workflow_sections.get(page, [])
+        if not (0 <= index < len(sections)):
+            return
+        scroll = self.pages.currentWidget()
+        if not isinstance(scroll, QScrollArea):
+            return
+        target = sections[index][1]
+        if target is None:
+            return
+        # Target QWidget lives under the scroll area's content widget.
+        y = target.mapTo(scroll.widget(), target.rect().topLeft()).y()
+        scroll.verticalScrollBar().setValue(max(0, y - 4))
 
     def _toggle_sidebar(self) -> None:
         self._sidebar_compact = not self._sidebar_compact
@@ -426,8 +461,7 @@ class StrapmanWindow(QMainWindow):
         self.pages.setCurrentIndex(page)
         for idx, button in enumerate(self.nav_buttons):
             button.setChecked(page == idx)
-        for idx, button in enumerate(self.workflow_buttons):
-            button.setChecked(page == idx)
+        self._update_workflow(page)
         self.screen_title.setText(self.nav_pages[page][1])
         if page == 2:
             self._refresh_history()
@@ -496,10 +530,12 @@ class StrapmanWindow(QMainWindow):
         controls.addWidget(self.workers_spin, 1, 2)
         s.addLayout(controls)
         self.verify_check = QCheckBox("Verify every GitHub blob after upload (SHA-256)")
-        self.reconstruct_check = QCheckBox("Also reconstruct from GitHub back to local storage")
+        self.reconstruct_check = QCheckBox("Automatically rebuild and SHA-256 verify the original after upload (default: on)")
         self.publish_full_check = QCheckBox("Publish original file too (only files up to 16 MiB)")
         for check in (self.verify_check, self.reconstruct_check, self.publish_full_check):
             s.addWidget(check)
+        self.auto_build_output = label("Workflow: stage → upload → remote verify → automatic rebuild → final SHA-256 check", "caption")
+        s.addWidget(self.auto_build_output)
         self.source_detail = label("Source size and required local staging space will be checked.", "caption")
         s.addWidget(self.source_detail)
         content.addWidget(source)
@@ -545,7 +581,17 @@ class StrapmanWindow(QMainWindow):
         self.event_log.setMaximumBlockCount(700)
         self.event_log.setMinimumHeight(150)
         p.addWidget(self.event_log)
+        self.rebuilt_output_label = label("Rebuilt output: none yet", "caption")
+        self.rebuilt_output_label.setWordWrap(True)
+        p.addWidget(self.rebuilt_output_label)
+        open_output = QPushButton("Open Rebuilt Output Folder")
+        open_output.clicked.connect(self._open_rebuild_output_folder)
+        p.addWidget(open_output)
         content.addWidget(progress)
+        self._workflow_sections[0] = [
+            ("Destination", dest), ("File & strategy", source),
+            ("Transfer & auto rebuild", progress),
+        ]
         content.addStretch(1)
         return area
 
@@ -588,6 +634,10 @@ class StrapmanWindow(QMainWindow):
         workspace_body.addWidget(self.workbench_tabs)
         content.addWidget(workspace)
         content.addWidget(b)
+        self._workflow_sections[1] = [
+            ("Repository settings", a), ("Browse & edit code", workspace),
+            ("README editor", b),
+        ]
         content.addStretch()
         return area
 
@@ -634,8 +684,11 @@ class StrapmanWindow(QMainWindow):
         operations.addWidget(line([remote_build, local_build]))
         self.build_status = label("Ready to discover remote builds or select local verified chunks.", "caption")
         operations.addWidget(self.build_status)
-        content.addWidget(build)
         content.addWidget(head)
+        content.addWidget(build)
+        self._workflow_sections[2] = [
+            ("Recovery & audit", head), ("Manual rebuild", build),
+        ]
         content.addStretch()
         return area
 
@@ -1186,6 +1239,10 @@ class StrapmanWindow(QMainWindow):
         about_body.addWidget(label("Developed by the Background Gremlin Group\nCreating Unique Tools for Unique Individuals", "caption"))
         about_body.addWidget(label("Python / Qt · Windows and Linux · Direct GitHub REST · No GitHub Actions", "caption"))
         content.addWidget(about)
+        self._workflow_sections[3] = [
+            ("Account & OAuth", authentication), ("Audio & themes", preferences),
+            ("Help & manuals", manuals), ("About", about),
+        ]
         content.addStretch()
         return area
 
@@ -1274,23 +1331,26 @@ class StrapmanWindow(QMainWindow):
 
     def _finish_success(self, description: str, result: Any, callback: Callable | None,
                         *, notify_transfer: bool = True) -> None:
-        self._event("COMPLETE", description)
-        if notify_transfer:
-            self._notify_done(success=True)
-        restore_state = result.get("reconstruction_status") if isinstance(result, dict) else None
-        restore_warning = restore_state in ("failed", "paused")
-        if restore_warning:
-            heading = ("Upload verified · Local reconstruction paused" if restore_state == "paused"
-                       else "Upload verified · Local reconstruction failed")
-            QMessageBox.warning(self, heading,
-                                "GitHub upload and remote verification completed successfully. "
-                                "The optional local reconstruction is " + restore_state +
-                                "; the uploaded data remains safely committed.\n\n" +
-                                result.get("reconstruction_error", "Open Job History to resume the restore."))
+        status = result.get("status") if isinstance(result, dict) else None
+        rebuild_problem = status in ("rebuild_failed", "rebuild_paused")
+        rebuilt = result.get("reconstruction_path") if isinstance(result, dict) else None
+        if rebuilt and Path(rebuilt).is_file():
+            self._last_rebuild_output = rebuilt
+            self.rebuilt_output_label.setText(f"Rebuilt and SHA-256 verified: {rebuilt}")
+        if rebuild_problem:
+            self._event("REBUILD NEEDED", "Remote upload is verified; reconstruction remains incomplete")
+            QMessageBox.warning(self, "GitHub upload verified · Rebuild incomplete",
+                                "The GitHub upload is published and verified, but the automatic "
+                                "post-upload reconstruction is not complete. It was not reported "
+                                "as a fully finished job. Resume the checkpoint from Job History.\n\n" +
+                                str(result.get("reconstruction_error") or "Rebuild needs attention."))
+        else:
+            self._event("COMPLETE", description)
+            if notify_transfer:
+                self._notify_done(success=True)
         handled = callback(result) is True if callback else False
-        handled = handled or restore_warning
         self._refresh_history()
-        if not handled:
+        if not handled and not rebuild_problem:
             QMessageBox.information(self, "Strapman — Complete", f"Completed successfully:\n{description}")
 
     def _finish_paused(self, message: str) -> None:
@@ -1867,7 +1927,15 @@ class StrapmanWindow(QMainWindow):
             remote_path=path, verify_remote=verify_selected,
             reconstruct=reconstruct_selected,
             publish_full=publish_selected, callback=notify),
-            f"Uploading {source.name} to {repo}:{branch}", job_kind="upload")
+            f"Upload / verify / {'rebuild' if reconstruct_selected else 'publish only'} {source.name} to {repo}:{branch}",
+            job_kind="upload")
+
+    def _open_rebuild_output_folder(self) -> None:
+        target = getattr(self, "_last_rebuild_output", None)
+        if not target or not Path(target).is_file():
+            QMessageBox.information(self, "Rebuilt original", "No completed reconstructed file is available yet.")
+            return
+        QDesktopServices.openUrl(QUrl.fromLocalFile(str(Path(target).parent)))
 
     def _pause_job(self) -> None:
         if self._active_task_kind not in ("upload", "restore") or not self.engine:
@@ -2192,7 +2260,7 @@ class StrapmanWindow(QMainWindow):
         self.chunk_spin.setValue(int(session.get("chunk_mib", 4)))
         self.workers_spin.setValue(int(session.get("workers", 4)))
         self.verify_check.setChecked(bool(session.get("verify_remote", True)))
-        self.reconstruct_check.setChecked(bool(session.get("reconstruct", False)))
+        self.reconstruct_check.setChecked(bool(session.get("reconstruct", True)))
         self.publish_full_check.setChecked(bool(session.get("publish_full", False)))
         self._play_cue("upload_resuming")
         self._start_upload()

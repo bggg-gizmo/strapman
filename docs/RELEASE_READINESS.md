@@ -127,3 +127,10 @@ disposable GitHub upload, SHA verification, resume and Build/Rebuild;
 publisher OAuth App with a real public client ID; full original Git-history
 privacy audit; native packaging and interruption tests. Mocked tests do not
 substitute for these release gates. No WatchMan edits or paid Actions.
+
+
+## v0.5.2 corrective acceptance gates
+
+The prior default upload-only reconstruction path and duplicated top navigation were owner-reported UX defects. The development correction makes verified local reconstruction part of the automatic upload pipeline by default, separates remote publication from rebuild completion, keeps manual recovery, stacks the Bootlegger brand icon above the complete fitted name, and uses in-page top workflow controls instead of a second page menu. Headless returns a nonzero exit code for incomplete automatic rebuilds.
+
+**Verification still outstanding:** Real Windows/Linux GUI layout at screenshot-equivalent dimensions, full headless CLI live tests, speaker/cue tests, a disposable >1-GiB GitHub transfer → pause → reboot → resume → rebuild → exact SHA-256, OAuth publisher setup, and full Git-history/privacy metadata inspection. Do not call this public-production certified from local mock tests.

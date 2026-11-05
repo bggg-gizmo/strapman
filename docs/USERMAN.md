@@ -126,7 +126,7 @@ Bootlegger has distinct speech cues for first-run setup, account ready, complete
 
 ## v0.5.0 — Sidebar, Repository Code Workbench, Build/Rebuild and headless
 
-**Sidebar:** Use `≪` to collapse the left navigation to icons; `≫` expands it again. All destinations remain available and each icon has an accessible name/tooltip. The top workflow buttons navigate the same pages without triggering uploads or commits.
+**Sidebar:** Use `≪` to collapse the left navigation to icons; `≫` expands it again. All destinations remain available and each icon has an accessible name/tooltip. The top workflow controls jump to sections of the currently selected page; the persistent sidebar alone navigates between pages. They never upload or commit.
 
 **Repository Desk → Repository Code Workbench:** Select your GitHub account, repo and branch on the Upload Station. Open Repository Desk. In **GitHub repository**, choose **Browse Folder**, double-click directories/files, or enter an exact path and click **Open GitHub File**. To create a file, enter a new path and click **New GitHub File**. Edit UTF-8 code, select **Validate Syntax** or **Review Diff**, then **Review & Commit to GitHub**. Inspect the full diff, enter a meaningful message, and confirm the exact destination. A missing or altered remote SHA, different account, branch or file will stop an unsafe write. No GitHub code is automatically executed.
 
@@ -152,3 +152,12 @@ patch does not contain the full recordings and therefore cannot pass this
 test. Lite deliberately uses built-in system tones rather than MP3s.
 In Bootlegger Settings & Help, preview each voice event with sound and
 voice enabled; a successful file check alone does not prove speakers work.
+
+
+## v0.5.2 — Automatic reconstruction and contextual workflow
+
+Upload Station defaults to automatic remote verification and **local reconstruction from GitHub's committed chunks**. Once the returned original is SHA-256 verified, the job is marked complete and the reconstructed output path appears on Upload Station with an Open Rebuilt Output Folder control. Manual Build/Rebuild remains accessible from Jobs & Rebuild for later recovery without repeating an upload.
+
+A remote upload which finished but whose automatic rebuild failed or paused has status `rebuild_failed` or `rebuild_paused`, not `complete`. It retains the committed GitHub manifest and can be resumed without duplicate commits. Original files are not deleted and existing destinations are never overwritten. An explicit per-upload opt-out is available for users who specifically want publish-only operation.
+
+The Bootlegger branding icon now sits **above** the complete title. Existing sidebar entries are preserved. Top-row controls select stages **within the current page**; they do not replicate the sidebar's destinations or perform remote writes. See [WORKFLOW.md](WORKFLOW.md).

@@ -48,3 +48,8 @@ For exceptional termination/reboot behavior, see [Crash recovery](CRASH_RECOVERY
 ### No-repeat bootstrap launcher
 
 The Windows and Linux headless wrappers use the standard-library `headless/launch.py` selector. It prefers a healthy reusable Strapman Python runtime or compatible older extracted environment before the system interpreter. It checks only for the minimal `requests` dependency and never invokes pip or installs Qt/MP3 packages. If none exists, it shows a direct error rather than silently downloading a desktop runtime.
+
+
+## v0.5.2 — Automatic reconstruction is the default
+
+Headless `upload` now carries out the complete remote publication → committed-part verification → local Build/Rebuild → SHA-256 check unless the user **explicitly** supplies `--no-reconstruct`. Existing `--reconstruct` remains accepted. On a published-but-not-reconstructed run the command returns JSON `state: needs_rebuild` and exits with code **5**, rather than claiming success (`0`). The remote publication and checkpoints remain intact; explicit `resume` can complete the reconstruction without new GitHub commits. Pause still has exit code **3**. The headless CLI remains sound-free and does not require Qt for basic commands.

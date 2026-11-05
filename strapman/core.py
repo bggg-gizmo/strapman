@@ -21,7 +21,7 @@ from typing import Any, Callable, Iterator
 from urllib.parse import urlparse
 
 APP_NAME = "Strapman"
-VERSION = "0.5.1-dev"
+VERSION = "0.5.2-dev"
 SCHEMA_VERSION = 1
 MIB = 1024 * 1024
 Progress = Callable[[str, int, int, str], None]
@@ -82,7 +82,8 @@ DEFAULT_SETTINGS: dict[str, Any] = {
     "theme_mode": "Purple Night",
     "flash_enabled": True,
     "verify_remote_after_upload": True,
-    "reconstruct_after_upload": False,
+    "reconstruct_after_upload": True,
+    "rebuild_workflow_v052": True,
     "publish_full_if_possible": False,
     "last_repo": "",
     "last_branch": "main",
@@ -99,7 +100,15 @@ class Settings:
         self.root = root or app_directory()
         self.path = self.root / "settings.json"
         self._lock = threading.RLock()
-        self.data = {**DEFAULT_SETTINGS, **read_json(self.path)}
+        saved = read_json(self.path)
+        self.data = {**DEFAULT_SETTINGS, **saved}
+        # Older installs inherited an upload-only default. Move them to the
+        # complete automated workflow once; later user opt-outs are respected.
+        if not saved.get("rebuild_workflow_v052"):
+            self.data["reconstruct_after_upload"] = True
+            self.data["rebuild_workflow_v052"] = True
+            if saved:
+                atomic_json(self.path, self.data)
 
     def get(self, key: str) -> Any:
         with self._lock:
@@ -205,7 +214,7 @@ class JobAlreadyRunning(RuntimeError):
 # Only live-looking states are eligible for recovery. A completed remote
 # publication is never demoted merely because optional reconstruction stopped.
 ACTIVE_JOB_STATES = frozenset({
-    "preparing", "prepared", "uploading", "downloading", "assembling",
+    "preparing", "prepared", "uploading", "published", "downloading", "assembling",
     "verifying", "committing", "running", "pausing",
 })
 
