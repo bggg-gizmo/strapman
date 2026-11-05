@@ -123,7 +123,7 @@ These boxes describe the **results still needed**, not work already certified:
 - [ ] **Headless:** JSON/exit-code accuracy, dashboard, pause/resume and automatic reconstruction without requiring GUI/audio dependencies.
 - [ ] **Scale:** credible **1 GiB+** disposable upload/verify/rebuild evidence with equal final checksum.
 - [ ] **Privacy/security:** source and reachable-history scans, credential handling, permissions, dependency/media review and no known source-deleting or unsafe overwrite path.
-- [ ] **Licensing/distribution:** choose an explicit open-source license and verify redistribution rights for artwork and MP3s; publish accurate installation and release documentation.
+- [ ] **Licensing/distribution:** Confirm the published [GNU GPLv3+ license](../LICENSE) and [attribution-chain notice](../NOTICE) are retained in redistributions, and **verify redistribution rights for artwork and MP3s** before declaring v1.0 ready.
 - [ ] **Authentication:** verify available login paths; publisher OAuth registration and true device-flow acceptance stay pending until the publisher configures and tests them. Do not advertise an untested flow as operational.
 - [ ] **Defects:** resolve and retest all confirmed critical data-integrity/security defects and decide the remaining high-severity findings before v1.0 sign-off.
 - [ ] **Supported host claims:** GitHub remains verified; Gitea/Forgejo or further provider integrations must pass their own disposable-instance end-to-end checks before being labeled supported.

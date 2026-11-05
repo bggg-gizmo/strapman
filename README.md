@@ -20,6 +20,7 @@
 [![SHA-256](https://img.shields.io/badge/Integrity-SHA--256-76d8f5?style=flat-square)](#verified-transfer--rebuild)
 [![Pause & Resume](https://img.shields.io/badge/Recovery-Pause_%26_Resume-b89aff?style=flat-square)](#verified-transfer--rebuild)
 [![Contributions Welcome](https://img.shields.io/badge/Contributions-Welcome-e889d5?style=flat-square)](#help-shape-strapman)
+[![License: GPLv3 or later](https://img.shields.io/badge/License-GPLv3%2B-9b73ef?style=flat-square)](LICENSE)
 
 **[Get Started](#get-started) · [Choose Your Edition](#three-ways-to-run-strapman) · [How It Works](#verified-transfer--rebuild) · [Report an Issue](https://github.com/bggg-gizmo/strapman/issues/new) · [Discussions](https://github.com/bggg-gizmo/strapman/discussions) · [Pull Requests](https://github.com/bggg-gizmo/strapman/pulls)**
 
@@ -129,7 +130,7 @@ For complete commands and agent integration, see the [Headless guide](docs/HEADL
 
 - **[Submit an issue](https://github.com/bggg-gizmo/strapman/issues/new):** Report reproducible bugs or request specific features. Include the edition, operating system, steps, expected behavior, and actual result.
 - **[Join a discussion](https://github.com/bggg-gizmo/strapman/discussions):** Share ideas, propose improvements, ask questions, and help decide what comes next.
-- **[Create a pull request](https://github.com/bggg-gizmo/strapman/compare):** Work in a separate branch, explain the change and how you tested it, then open a PR for review. Existing features and data-integrity safeguards should remain intact.
+- **[Create a pull request](https://github.com/bggg-gizmo/strapman/compare):** Work in a separate branch, explain the change and how you tested it, then open a PR for review. Existing features and data-integrity safeguards should remain intact. Follow our [contributing guide](CONTRIBUTING.md), including the contributor attribution chain.
 - **[Review the roadmap](ROADMAP.md):** GitHub is supported now. Platform integrations are actively being developed for Gitea and Forgejo, but are not yet available in this testing build. Tell us what integrations you need in Discussions.
 
 For code contributions, run the applicable tests before opening a PR. **Never paste access tokens, private repositories, local paths, or unredacted logs into an issue, discussion, or PR.** Report suspected security vulnerabilities through a private maintainer contact channel rather than publicly disclosing secrets.
@@ -148,12 +149,13 @@ From the repository root, with the appropriate test dependencies installed:
 
 A full Git checkout can also run <code>python tools/public_audit.py --history</code> to inspect reachable history. These checks do not replace real-device testing or guarantee that a project has no defects.
 
-The repository is now **public for testing**. Bug reports, discussions, and pull requests are welcome. A public distribution license has not yet been selected; viewing source does not by itself grant redistribution rights.
+The repository is **public for testing and open source** under the [GNU GPL version 3 or later](LICENSE), with an [attribution-chain NOTICE](NOTICE) and [credits record](ATTRIBUTION.md). **If you fork or distribute modifications, preserve existing credits and add your name or handle, date, and change summary.** Original media are licensed to the extent their creators have the necessary rights; third-party trademarks, likeness rights and dependencies are not automatically granted by this repository.
 
 ## Documentation
 
 | Guide | What you'll find |
 |:--|:--|
+| [License & attribution chain](LICENSE) | GNU GPLv3+, [mandatory notices](NOTICE), [credits](ATTRIBUTION.md), and [contributor guide](CONTRIBUTING.md) |
 | [Public testing checklist](docs/PUBLIC_TESTING_CHECKLIST.md) | Real-world test cases, required evidence, v1.0 release gates |
 | [User manual](docs/USERMAN.md) | Setup, upload, verification, reconstruction, and daily use |
 | [Headless reference](docs/HEADLESS.md) | CLI commands, agent workflows, JSON status, dashboards |

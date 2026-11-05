@@ -1,0 +1,30 @@
+# Strapman — Legal Notices and Attribution Chain
+
+**Original project:** Background Gremlin Group (`@bggg-gizmo`)  
+**Upstream source:** https://github.com/bggg-gizmo/strapman  
+**Software license:** GNU General Public License, version 3 or any later version (`GPL-3.0-or-later`); complete unmodified terms in [LICENSE](LICENSE).  
+**Initial publication:** 2026.
+
+Copyright © 2026 Background Gremlin Group and the respective copyright holders of subsequent contributions.
+
+## Attribution terms under GNU GPLv3 section 7
+
+For original Strapman material that Background Gremlin Group owns or is authorized to license under the GPL, the following **reasonable additional legal notices** apply under GNU GPLv3 section 7(b) and 7(c):
+
+1. **Preserve existing credits.** When redistributing the covered material, including a fork or derivative, preserve the original project origin and truthful existing author or contributor credits recorded in [ATTRIBUTION.md](ATTRIBUTION.md), this NOTICE, and any applicable source-file attribution notices. An equivalent readily accessible attribution notice accompanying the derivative is acceptable. Do not falsely assign original authorship to another person.
+2. **Mark modifications and identify their contributor.** When conveying modified covered source material, state that the material was modified, the relevant date, a meaningful description of the change, and the modifying contributor's chosen **name or handle** in [ATTRIBUTION.md](ATTRIBUTION.md), or in an equivalent prominent change/attribution record accompanying that version. Contributors may use a public handle rather than their legal name.
+3. **Keep the attribution chain.** A derivative's newly added credits should be appended without suppressing the prior contributors' accurate credits. If an entry is mistaken, correct it transparently with a brief note rather than erasing the contribution history.
+
+These notices concern redistribution and accurate authorship of covered material; they do not require attribution in unrelated works or output merely produced by using Strapman. They are intended to operate within the permissions of GPLv3 section 7 and do not purport to grant rights the original contributors do not own.
+
+## Media, names, and external dependencies
+
+Project-origin artwork, sound recordings, documentation and code are made available under the project's open-source terms **to the extent their respective rights holders have authorized that licensing**. Any third-party elements, library code, trademarks, names, likeness or publicity rights remain subject to their own lawful rights. The repository's inclusion of media is not a representation that third-party personality, trademark or recording rights have been cleared for every reuse; please verify the applicable rights before redistributing those elements.
+
+Third-party Python packages are licensed by their respective authors, not relicensed merely by being listed in `requirements.txt`.
+
+A GPL grant is subject to the terms in [LICENSE](LICENSE), including the absence of warranties. This NOTICE does not amend the verbatim text of the GNU GPL.
+
+## Credits and contributing
+
+The maintained record is [ATTRIBUTION.md](ATTRIBUTION.md). New contributors and fork maintainers should read [CONTRIBUTING.md](CONTRIBUTING.md) and preserve the chain when distributing a modification.
