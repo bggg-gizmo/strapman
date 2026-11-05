@@ -3,6 +3,8 @@
 This is a factual technical gate record, **not** a guarantee of zero bugs or a
 claim that a public release has been certified. It covers only Strapman.
 
+**Current status:** Public testing for v1.0 is underway. See the [Public Testing Checklist](PUBLIC_TESTING_CHECKLIST.md) for test cases, the evidence to submit, and the criteria for moving to v1.0. Historical sections below reflect their original dates, including when the testing repository was private. The provider-independent foundation and Gitea/Forgejo integrations are in progress per the [roadmap](../ROADMAP.md), but GitHub remains the only currently supported host.
+
 ## Completed in the development environment
 
 - v0.3.1 source review and automated regression suite: **46 passed** on Linux
@@ -143,3 +145,7 @@ The prior default upload-only reconstruction path and duplicated top navigation 
 - A Windows Qt offscreen smoke test instantiated Lite and Bootlegger at their 1010×700 minimum, checked the full brand title fits and confirmed the top strip changes within each selected page. Offscreen font glyphs did not render legibly, so this is not a native-display visual certification. Native Windows MCI returned an initialization error for the new MP3s; audible playback was not verified.
 
 **Still open:** Native Windows/Linux GUI and speaker acceptance, AC transition hardware, OAuth publisher registration, a 1+ GiB live transfer with real reboot and recovery, installer packaging, media/licensing review, and any future public visibility change. The testing repository remains private.
+
+## 2026-11-05 — Community public testing → v1.0
+
+The public testing repository is open for feedback. The [Public Testing Checklist](PUBLIC_TESTING_CHECKLIST.md) requests real Windows/Linux visual and audio evidence, installer/authentication checks, GitHub chunk publication and SHA-256-verified automatic/manual rebuild, safe pause/interruption/restart/resume, Headless parity, one 1 GiB+ disposable stress test, and privacy, dependency, license and media-rights reviews. The recorded 122 automated tests and earlier disposable multipart integration are useful baseline evidence, **not** proof every gate has closed. Publisher device-code OAuth setup remains pending; do not claim it is fully configured. Platform integrations for Gitea/Forgejo are being developed according to the roadmap, not currently supported. Critical correctness and data-integrity reports must be fixed and retested before v1.0.

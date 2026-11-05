@@ -130,11 +130,13 @@ For complete commands and agent integration, see the [Headless guide](docs/HEADL
 - **[Submit an issue](https://github.com/bggg-gizmo/strapman/issues/new):** Report reproducible bugs or request specific features. Include the edition, operating system, steps, expected behavior, and actual result.
 - **[Join a discussion](https://github.com/bggg-gizmo/strapman/discussions):** Share ideas, propose improvements, ask questions, and help decide what comes next.
 - **[Create a pull request](https://github.com/bggg-gizmo/strapman/compare):** Work in a separate branch, explain the change and how you tested it, then open a PR for review. Existing features and data-integrity safeguards should remain intact.
-- **[Review the roadmap](ROADMAP.md):** GitHub remains the supported provider today. Gitea and Forgejo are planned; provider-independent support is being researched and developed.
+- **[Review the roadmap](ROADMAP.md):** GitHub is supported now. Platform integrations are actively being developed for Gitea and Forgejo, but are not yet available in this testing build. Tell us what integrations you need in Discussions.
 
 For code contributions, run the applicable tests before opening a PR. **Never paste access tokens, private repositories, local paths, or unredacted logs into an issue, discussion, or PR.** Report suspected security vulnerabilities through a private maintainer contact channel rather than publicly disclosing secrets.
 
 ## Testing & project status
+
+**[Public testing checklist: What to test, how to report results, and the v1.0 release gates](docs/PUBLIC_TESTING_CHECKLIST.md)**
 
 **v0.5.2-dev — public testing.** The documented complete-checkout review reports **122 passing Python tests**, **32/32 verified Bootlegger MP3 copies**, and a successful disposable-repository multipart upload/pause/resume/rebuild round-trip. Work remains on larger transfers, Windows/Linux GUI and speaker acceptance, reboot recovery, and publisher OAuth setup.
 
@@ -152,6 +154,7 @@ The repository is now **public for testing**. Bug reports, discussions, and pull
 
 | Guide | What you'll find |
 |:--|:--|
+| [Public testing checklist](docs/PUBLIC_TESTING_CHECKLIST.md) | Real-world test cases, required evidence, v1.0 release gates |
 | [User manual](docs/USERMAN.md) | Setup, upload, verification, reconstruction, and daily use |
 | [Headless reference](docs/HEADLESS.md) | CLI commands, agent workflows, JSON status, dashboards |
 | [Workflow contract](docs/WORKFLOW.md) | Automatic build/rebuild, pause, resume, completion states |

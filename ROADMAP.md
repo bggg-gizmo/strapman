@@ -1,9 +1,9 @@
 # Strapman Development Roadmap
 
-**Owner direction:** Maintain complete GitHub functionality in Strapman Lite, Bootlegger Pro and Headless Strapman; support other Git hosts without removing current workflows. The separate owner-designated release/testing repository is bggg-gizmo/strapman and must remain private until explicitly approved for public visibility.
+**Owner direction:** Maintain complete GitHub functionality in Strapman Lite, Bootlegger Pro and Headless Strapman; support other Git hosts without removing current workflows. The release/testing repository `bggg-gizmo/strapman` is now public for testing; the separate development repository remains private.
 
 **Specification:** SPECS.md is the product/technical acceptance contract.
-**Baseline:** v0.5.1-dev; GitHub-only storage transport; 110 local Python tests passing at the last recorded review. Real device and network acceptance remain open.
+**Baseline:** v0.5.2-dev public testing; GitHub-only supported transport. The documented complete-checkout review recorded 122 passing Python tests, 32/32 voice MP3 copies, and a disposable upload/rebuild. Native device, scale, OAuth and packaging acceptance remain open. See [Public Testing Checklist](docs/PUBLIC_TESTING_CHECKLIST.md).
 
 ## Current — Stabilization and controlled public-source testing
 
@@ -12,17 +12,17 @@
 - [x] Sound-free headless CLI with status, dashboard, snapshot, explicit pause/resume, upload, remote/local rebuild and code checks.
 - [x] Repository Desk GitHub README editing and remote/local text workbench with explicit code validation and local testing.
 - [x] Atomic checkpoints, hard-exit interruption detection and explicit user-authorized resume.
-- [x] Dev-source privacy and audio-inventory tooling; 110-test regression baseline.
+- [x] Dev-source privacy and audio-inventory tooling; documented 122-test Windows baseline and 32/32 voice MP3 copies.
 - [ ] Native Windows and Linux GUI acceptance for all screens, exact MP3 voice output and power reminders.
 - [ ] Test 1+ GiB disposable GitHub upload including interrupt, restart, verification and byte-exact reconstruction.
 - [ ] Register actual publisher GitHub OAuth App; ship its PUBLIC client ID only; exercise device-code flow without Git/gh.
 - [ ] Audit entire Git history and source/media metadata, dependencies and public licensing policy.
-- [ ] Publish a clean source snapshot and controlled testing instructions to private bggg-gizmo/strapman; do NOT transfer private development history or toggle visibility.
-- [ ] Resolve all critical findings from actual public-testing reports before any public visibility change.
+- [x] Publish the reviewed independent testing snapshot to the public `bggg-gizmo/strapman` repository without private development history or coordination logs.
+- [ ] Collect results against the [Public Testing Checklist](docs/PUBLIC_TESTING_CHECKLIST.md) and resolve critical findings before v1.0.
 
 ## Next — Provider-independent foundation (P1, development only)
 
-**Goal:** Let users choose GitHub, Gitea, Forgejo or future Git services without weakening byte-level reconstruction or repository safety. Gitea/Forgejo are NOT currently supported merely because they are listed here.
+**Goal:** Let users choose GitHub, Gitea, Forgejo or future Git services without weakening byte-level reconstruction or repository safety. **Provider integration work is ongoing in development**, but Gitea/Forgejo are NOT yet supported by the public testing build merely because they are listed here.
 
 - [ ] Introduce a provider interface for identity, selected host, repositories, branches, directory listing, content retrieval, upload staging, commit publication, manifest inventory, file edit and optional settings.
 - [ ] Keep one shared engine and one provider-neutral file manifest; use explicit provider/host identity in checkpoint keys so a target on one server cannot be silently resumed on another.
@@ -88,6 +88,6 @@ Research before design:
 
 1. Every implemented checkbox requires tests and a corresponding factual entry in the private AGENT_COORDINATION.md.
 2. No new provider ships as 'supported' until an actual disposable-instance end-to-end upload → verify → pause/reboot/resume → reconstruct passes with byte-exact digests.
-3. Public-source snapshots must be from reviewed current files, not a mirror of dev history. The public testing repository remains private until owner approval.
+3. Public-source snapshots must be reviewed current files, not a mirror of private development history. The release/testing repository is now public; keep coordination files and unreleased experiments out of its history.
 4. All editions use the same verified storage format where technically possible; preserve manifest backward compatibility and existing upload/restore semantics.
 5. No paid GitHub Actions, paid hosted CI, repository deletion, source reclamation or WatchMan changes.
